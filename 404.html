@@ -33,7 +33,7 @@
 
         .hint {
             margin-top: 1em;
-            opacity: 0.8;
+            opacity: .8;
             animation: pulse 2s infinite ease-in-out;
         }
 
@@ -53,7 +53,7 @@
 
             0%,
             100% {
-                opacity: 0.6;
+                opacity: .6;
             }
 
             50% {
@@ -65,26 +65,32 @@
 
 <body>
     <div class="container" id="msg" style="display:none;">
-        <div class="glow">404 — LOST IN CONTINUUM</div>
+        <div class="glow">404</div>
+        <div class="glow">LOST IN CONTINUUM</div>
         <div class="hint">Recalibrating navigation systems...</div>
-        <div class="hint" style="font-size: 0.9em;">Redirecting to home base in 5 seconds...</div>
+        <div class="hint" style="font-size:0.9em;">Redirecting to home base...</div>
     </div>
 
     <script>
-        const validPaths = [
-            "/", "/about", "/projects", "/experience", "/skills", "/contact"
-        ];
-        const path = location.pathname.replace(/\/+$/, "").toLowerCase() || "/";
-        const redirect = location.pathname + location.search + location.hash;
+        // ---- configuration ----
+        const repoBase = "/AdaDenizAktas.github.io"; // your actual GitHub Pages sub-path
+        const validPaths = ["/", "/about", "/projects", "/experience", "/skills", "/contact"];
 
-        if (validPaths.includes(path)) {
-            // Page exists → restore to that exact route
+        // normalize current path (remove trailing slash)
+        let path = location.pathname.replace(/\/+$/, "");
+        // strip repo prefix if present
+        if (path.startsWith(repoBase)) path = path.slice(repoBase.length) || "/";
+
+        const redirect = path + location.search + location.hash;
+
+        if (validPaths.includes(path.toLowerCase())) {
+            // Valid route → store and redirect to app root (repoBase)
             sessionStorage.redirect = redirect;
-            location.replace("/");
+            location.replace(repoBase + "/");
         } else {
-            // Invalid path → show sci-fi 404 and redirect home after delay
+            // Invalid route → show 404, then go home
             document.getElementById("msg").style.display = "block";
-            setTimeout(() => location.replace("/"), 5000);
+            setTimeout(() => location.replace(repoBase + "/"), 5000);
         }
     </script>
 </body>
