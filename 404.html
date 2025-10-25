@@ -1,70 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lost in Continuum</title>
     <style>
-      html, body {
-        margin: 0;
-        height: 100%;
-        background: radial-gradient(ellipse at center, #020312 0%, #000 100%);
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #bcd3ff;
-        font-family: 'Segoe UI', monospace;
-        letter-spacing: 0.1em;
-      }
-      .container {
-        text-align: center;
-        animation: fadeIn 2s ease-in-out;
-      }
-      .glow {
-        font-size: 4em;
-        font-weight: 700;
-        text-shadow: 0 0 10px #4fa3ff, 0 0 20px #4fa3ff;
-      }
-      .hint {
-        margin-top: 1em;
-        opacity: 0.8;
-        animation: pulse 2s infinite ease-in-out;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes pulse {
-        0%,100% { opacity: 0.6; }
-        50% { opacity: 1; }
-      }
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #020312 0%, #000 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bcd3ff;
+            font-family: 'Segoe UI', monospace;
+            letter-spacing: 0.1em;
+        }
+
+        .container {
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .glow {
+            font-size: 4em;
+            font-weight: 700;
+            text-shadow: 0 0 10px #4fa3ff, 0 0 20px #4fa3ff;
+        }
+
+        .hint {
+            margin-top: 1em;
+            opacity: 0.8;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div class="container" id="msg">
-      <div class="glow">404</div>
-      <div class="glow">LOST IN CONTINUUM</div>
-      <div class="hint">Recalibrating navigation systems...</div>
-      <div class="hint" style="font-size: 0.9em;">Redirecting to home base...</div>
+</head>
+
+<body>
+    <div class="container" id="msg" style="display:none;">
+        <div class="glow">404 — LOST IN CONTINUUM</div>
+        <div class="hint">Recalibrating navigation systems...</div>
+        <div class="hint" style="font-size: 0.9em;">Redirecting to home base in 5 seconds...</div>
     </div>
 
     <script>
-      const validPaths = [
-        "/", "/about", "/projects", "/experience", "/skills", "/contact"
-      ];
-      const path = location.pathname.replace(/\/+$/, "");
-      const redirect = location.pathname + location.search + location.hash;
+        const validPaths = [
+            "/", "/about", "/projects", "/experience", "/skills", "/contact"
+        ];
+        const path = location.pathname.replace(/\/+$/, "").toLowerCase() || "/";
+        const redirect = location.pathname + location.search + location.hash;
 
-      if (validPaths.includes(path.toLowerCase())) {
-        // Page exists → restore to SPA
-        sessionStorage.redirect = redirect;
-        location.replace("/");
-      } else {
-        // Page truly doesn't exist → show sci-fi 404
-        document.getElementById("msg").style.display = "block";
-        setTimeout(() => location.replace("/"), 4000);
-      }
+        if (validPaths.includes(path)) {
+            // Page exists → restore to that exact route
+            sessionStorage.redirect = redirect;
+            location.replace("/");
+        } else {
+            // Invalid path → show sci-fi 404 and redirect home after delay
+            document.getElementById("msg").style.display = "block";
+            setTimeout(() => location.replace("/"), 5000);
+        }
     </script>
-  </body>
+</body>
+
 </html>
