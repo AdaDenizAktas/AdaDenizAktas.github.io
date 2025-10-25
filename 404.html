@@ -72,27 +72,21 @@
     </div>
 
     <script>
-        // ---- configuration ----
-        const repoBase = "/AdaDenizAktas.github.io"; // your actual GitHub Pages sub-path
+        const repoBase = "/AdaDenizAktas.github.io";
         const validPaths = ["/", "/about", "/projects", "/experience", "/skills", "/contact"];
-
-        // normalize current path (remove trailing slash)
         let path = location.pathname.replace(/\/+$/, "");
-        // strip repo prefix if present
         if (path.startsWith(repoBase)) path = path.slice(repoBase.length) || "/";
-
         const redirect = path + location.search + location.hash;
 
         if (validPaths.includes(path.toLowerCase())) {
-            // Valid route → store and redirect to app root (repoBase)
-            sessionStorage.redirect = redirect;
+            sessionStorage.setItem("redirectPath", redirect);
             location.replace(repoBase + "/");
         } else {
-            // Invalid route → show 404, then go home
             document.getElementById("msg").style.display = "block";
             setTimeout(() => location.replace(repoBase + "/"), 5000);
         }
     </script>
+
 </body>
 
 </html>
