@@ -4,37 +4,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vite App</title>
+  <title>Continuum Layer</title>
+  <meta name="description"
+    content="Continuum Layer — Interactive dimensional portfolio and applied logic experiments by Ada Deniz Aktaş.">
+
   <script>
     (() => {
       const link = document.querySelector("link[rel*='icon']") || document.createElement("link");
-      link.rel = "icon"; document.head.appendChild(link);
+      link.rel = "icon";
+      document.head.appendChild(link);
 
       const c = document.createElement("canvas");
       const size = 64;
-      c.width = size; c.height = size;
-      const ctx = c.getContext("2d");
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.font = "bold 30px 'Segoe UI', sans-serif";
+      c.width = c.height = size;
+      const x = c.getContext("2d");
+      x.textAlign = "center";
+      x.textBaseline = "middle";
+      x.font = "bold 28px 'Segoe UI', sans-serif";
+      x.lineWidth = 1;
+      x.shadowColor = "rgba(0,0,0,0.3)";
+      x.shadowBlur = 2;
 
       let t = 0;
-      function draw() {
-        ctx.clearRect(0, 0, size, size);
+      function frame() {
+        x.clearRect(0, 0, size, size);
+        // Subtle rotating hue shift (non-neon)
+        const hue = 220 + Math.sin(t / 50) * 20;
+        const g = x.createRadialGradient(size / 2, size / 2, 4, size / 2, size / 2, 28);
+        g.addColorStop(0, `hsl(${hue}, 30%, 60%)`);
+        g.addColorStop(1, `hsl(${hue}, 30%, 10%)`);
+        x.fillStyle = g;
+        x.beginPath();
+        x.arc(size / 2, size / 2, 30, 0, Math.PI * 2);
+        x.fill();
 
-        // Transparent background (no fill)
-        // Soft fading text with logical pulse
-        const alpha = 0.35 + 0.25 * Math.sin(t * 0.08);
-        ctx.fillStyle = `rgba(180, 190, 255, ${alpha})`;
-        ctx.fillText("A.D.A.", size / 2, size / 2);
-
+        // Text (non-neon white/blue-gray)
+        x.fillStyle = "hsl(210, 20%, 85%)";
+        x.fillText("A.D.A.", size / 2, size / 2 + 2);
         link.href = c.toDataURL("image/png");
         t++;
-        requestAnimationFrame(draw);
+        requestAnimationFrame(frame);
       }
-      draw();
+      frame();
     })();
   </script>
+
 
 
 
