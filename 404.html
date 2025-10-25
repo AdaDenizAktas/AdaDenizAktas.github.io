@@ -72,20 +72,22 @@
     </div>
 
     <script>
-        const repoBase = "/AdaDenizAktas.github.io";
         const validPaths = ["/", "/about", "/projects", "/experience", "/skills", "/contact"];
-        let path = location.pathname.replace(/\/+$/, "");
-        if (path.startsWith(repoBase)) path = path.slice(repoBase.length) || "/";
-        const redirect = path + location.search + location.hash;
+        const path = location.pathname.replace(/\/+$/, "").toLowerCase() || "/";
+        const full = location.pathname + location.search + location.hash;
 
-        if (validPaths.includes(path.toLowerCase())) {
-            sessionStorage.setItem("redirectPath", redirect);
-            location.replace(repoBase + "/");
-        } else {
+        // Case 1: Vue page exists → redirect to SPA root and restore route
+        if (validPaths.includes(path)) {
+            sessionStorage.setItem("vue-spa-redirect", full);
+            window.location.replace("/");
+        }
+        // Case 2: Invalid → show 404 UI and redirect home after delay
+        else {
             document.getElementById("msg").style.display = "block";
-            setTimeout(() => location.replace(repoBase + "/"), 5000);
+            setTimeout(() => location.replace("/"), 5000);
         }
     </script>
+
 
 </body>
 
