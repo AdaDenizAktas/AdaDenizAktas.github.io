@@ -1,0 +1,268 @@
+{
+  "header": {
+    "location": "Localisation actuelle : Kayseri, Turquie"
+  },
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "skills": "Compétences",
+    "experience": "Expérience",
+    "projects": "Projets",
+    "contact": "Contact"
+  },
+  "home": {
+    "title": "Ingénieure Fullstack",
+    "summary": {
+      "part1": "Plus de dix ans d’expérience dans la livraison de systèmes de niveau entreprise dans les domaines",
+      "medical": "médical",
+      "industrial": "industriel",
+      "and": "et",
+      "ai": "pilotés par l’IA",
+      "part2": ". Spécialisée en",
+      "part3": "microservices C# .NET Core,",
+      "part4": "pipelines CI/CD cloud-native et architecture backend évolutive."
+    },
+    "cta": {
+      "projects": "Voir les projets",
+      "contact": "Me contacter"
+    }
+  },
+  "about": {
+    "title": "À propos de moi",
+    "summary": "Ingénieure logicielle Fullstack avec plus de dix ans d’expérience dans la création de systèmes d’entreprise évolutifs dans les domaines médical, industriel et marketing — alliant architecture, direction d’équipe et orientation résultats.",
+    "expertise": [
+      {
+        "title": "Backend & Architecture",
+        "text": "Microservices C# .NET Core, REST & SignalR, CQRS, SOLID, architecture propre, systèmes pilotés par événements."
+      },
+      {
+        "title": "Frontend & Web",
+        "text": "Blazor, cycle de vie SPA, TypeScript, design réactif et frameworks d’interface complexes."
+      },
+      {
+        "title": "DevOps & Cloud",
+        "text": "Docker, Azure DevOps, GitHub Actions, pipelines CI/CD cloud-native, observabilité et automatisation."
+      },
+      {
+        "title": "Testing & QA",
+        "text": "xUnit, NUnit, Selenium, Playwright, Postman, couverture TDD/BDD complète et traçabilité."
+      },
+      {
+        "title": "Bases de données",
+        "text": "SQL Server, PostgreSQL, MySQL, Firebase ; conception de requêtes optimisées et performance de concurrence."
+      },
+      {
+        "title": "Leadership & Livraison",
+        "text": "Leadership Agile/Scrum, alignement de la vision produit, mentorat et livraison à grande échelle."
+      }
+    ]
+  },
+  "skills": {
+    "labels": {
+      "practices": "Pratiques",
+      "best": "Meilleures",
+      "improvable": "Améliorables",
+      "bad": "À éviter"
+    },
+    "title": "Compétences principales",
+    "items": [
+      {
+        "title": "Ingénierie Backend",
+        "description": "C# .NET Core, Microservices, APIs REST, CQRS, Architecture propre, SignalR",
+        "best": "Services sans état, séparation claire de la logique commande/requête, modularisation orientée domaine et flux asynchrones pilotés par événements.",
+        "improvable": "Couplage étroit entre APIs et modèles de base de données — adopter des contrats et interfaces. Feuille de route : isoler la logique métier, introduire des courtiers de messages et ajouter des modèles de basculement.",
+        "bad": "Contrôleurs massifs, logique contenue dans les contrôleurs, dépendances circulaires, I/O synchrones en production."
+      },
+      {
+        "title": "Ingénierie Frontend",
+        "description": "Vue 3, TypeScript, Blazor, Composition d’interface, Cycle de vie SPA, Amélioration progressive",
+        "best": "Architecture composable, contrôle d’état réactif, API de composants cohérentes, empreinte DOM minimale.",
+        "improvable": "Utilisation excessive de watchers et de réactivité profonde — migrer vers des pipelines calculés. Feuille de route : refactoriser les composants lourds en slots et composables.",
+        "bad": "Manipulation directe du DOM, pollution de l’état global, couplage fort entre interface et logique."
+      },
+      {
+        "title": "Cloud & DevOps",
+        "description": "Docker, Azure DevOps, GitHub Actions, CI/CD, Déploiement cloud, Observabilité",
+        "best": "Builds immuables, IaC déclaratif, gestion des secrets à privilège minimal et versionnage des pipelines.",
+        "improvable": "Liaison manuelle de conteneurs — utiliser le réseau Compose ou la découverte de services. Feuille de route : intégrer des tests matriciels d’environnement et des mises en scène éphémères.",
+        "bad": "Secrets dans les fichiers YAML, builds sur agents actifs, connexions SSH dans des conteneurs de production."
+      },
+      {
+        "title": "Bases de données & Persistance",
+        "description": "SQL Server, PostgreSQL, MySQL, MongoDB, Firebase, Optimisation de requêtes",
+        "best": "Conception de schéma sensible aux index, sécurité transactionnelle, séparation CQRS lecture/écriture, mise en cache des chemins critiques.",
+        "improvable": "Manque de surveillance — activer les journaux de requêtes lentes. Feuille de route : partitionner par domaine, ajouter des réplicas en lecture, tester les migrations sous charge.",
+        "bad": "Mauvais usage des ORM, requêtes concaténées brutes, ensembles de résultats non limités, dérive de schéma dans CI/CD."
+      },
+      {
+        "title": "Qualité & Automatisation",
+        "description": "xUnit, NUnit, Playwright, Selenium, Postman, QA automatisé, Tests d’intégration",
+        "best": "Validation basée sur pipeline, mocks isolés et cohérence d’infrastructure pilotée par les tests.",
+        "improvable": "Faible couverture des chemins asynchrones. Feuille de route : appliquer des seuils d’intégration, ajouter des tests de mutation pour la logique métier.",
+        "bad": "Dépendance aux tests manuels, ordre d’exécution des tests, état partagé entre cas de test."
+      },
+      {
+        "title": "Architecture & Leadership",
+        "description": "Conception de systèmes, Leadership d’équipe, Agile, Culture CI/CD, Livraison à grande échelle",
+        "best": "Diriger par l’exemple, définir des standards architecturaux, enseigner la logique plutôt que la conformité.",
+        "improvable": "Leadership réactif — instaurer un mentorat proactif. Feuille de route : définir des couches d’autonomie d’équipe et des indicateurs de confiance mesurables.",
+        "bad": "Contrôle excessif du code, révisions fermées, décisions émotionnelles plutôt qu’objectives."
+      }
+    ]
+  },
+  "experience": {
+    "title": "Expérience",
+    "items": [
+      {
+        "role": "Freelance",
+        "company": "Projets indépendants",
+        "period": "juil. 2025 – présent",
+        "description": "Travail sur divers projets d’IA, de web et d’automatisation à petite échelle — axé sur la résolution créative de problèmes et le prototypage rapide."
+      },
+      {
+        "role": "Pause de carrière",
+        "company": "Rétablissement de santé",
+        "period": "nov. 2024 – juil. 2025",
+        "description": "Concentration sur la récupération, le prototypage assisté par IA et les expérimentations d’architecture cloud-native."
+      },
+      {
+        "role": "Ingénieur Fullstack Senior",
+        "company": "Proxify – Getinge Medical AB",
+        "period": "nov. 2021 – nov. 2024",
+        "description": "Exploitation du SimulationHub pour l’automatisation de la stérilisation hospitalière en C# .NET Core, microservices et pipelines Azure DevOps."
+      },
+      {
+        "role": "Responsable DevOps",
+        "company": "Proxify – Shell Global R&D",
+        "period": "févr. 2022 – mars 2022",
+        "description": "Gestion des pipelines CI/CD, tableaux de bord automatisés et analyses sécurisées pour les opérations de R&D."
+      },
+      {
+        "role": "Ingénieur Fullstack / Media Manager",
+        "company": "One Ingage Marketing Inc.",
+        "period": "févr. 2021 – oct. 2021",
+        "description": "Développement de tableaux de bord analytiques, intégrations CMS et outils d’automatisation marketing basés sur Blazor."
+      },
+      {
+        "role": "Ingénieur Fullstack",
+        "company": "Indis Software Inc.",
+        "period": "déc. 2019 – févr. 2021",
+        "description": "Création de backends SaaS évolutifs, optimisation des requêtes SQL Server et automatisation QA avec Selenium et Postman."
+      },
+      {
+        "role": "Ingénieur Fullstack",
+        "company": "Joker Software Inc.",
+        "period": "janv. 2019 – sept. 2019",
+        "description": "Développement de systèmes ERP, automatisation matérielle et maintenance de plateformes .NET héritées."
+      },
+      {
+        "role": "Ingénieur Fullstack",
+        "company": "Safa Informatics",
+        "period": "août 2017 – déc. 2018",
+        "description": "Direction de projets d’intégration ERP, gestion d’API et amélioration de la fiabilité du backend."
+      }
+    ]
+  },
+  "common": {
+    "present": "Présent",
+    "urgency": {
+      "immediate": "Immédiate",
+      "high": "Haute",
+      "normal": "Normale",
+      "research": "Recherche uniquement"
+    }
+  },
+  "projects": {
+    "title": "Projets",
+    "items": [
+      {
+        "title": "Simulation Hub",
+        "companyName": "Getinge Medical AB",
+        "period": "Nov 2021 - Nov 2024 (3 ans)",
+        "description": "Plateforme de simulation pour dispositifs médicaux, dédiée à l’automatisation de la stérilisation hospitalière, développée en C# .NET Core et REST."
+      },
+      {
+        "title": "Automation Hub",
+        "companyName": "Getinge Medical AB",
+        "period": "Oct 2021 - Oct 2024 (3 ans)",
+        "description": "Système d’automatisation hospitalière avancé avec modules de simulation et d’intégration, tests automatisés xUnit et déploiement Docker."
+      },
+      {
+        "title": "KolayCar",
+        "companyName": "INDIS Software INC",
+        "period": "Dec 2019 - Feb 2021 (1,5 an)",
+        "description": "Système de gestion de location de voitures avec backend C#, optimisation SQL Server et interfaces WebForms héritées."
+      },
+      {
+        "title": "Joker ERP",
+        "companyName": "Joker Software INC",
+        "period": "Jan 2019 - Sep 2019 (0,75 an)",
+        "description": "ERP complet pour la fabrication et la vente au détail, avec interfaces Windows Forms et optimisation SQL Server."
+      },
+      {
+        "title": "Epsilon",
+        "companyName": "Safa Informatics",
+        "period": "Août 2017 - Déc 2018 (1,5 an)",
+        "description": "Système d’intégration ERP pour grandes places de marché, utilisant un backend C# et Python, et des API microservices."
+      },
+      {
+        "title": "Smart House",
+        "companyName": "Projet personnel",
+        "period": "2022 - 2024 (2 ans)",
+        "description": "Système domotique avec capteurs IoT, commande vocale et supervision à distance via JavaScript, Python et MQTT."
+      },
+      {
+        "title": "Smart Garage",
+        "companyName": "Projet personnel",
+        "period": "2021 - 2022 (1 an)",
+        "description": "Automatisation de garage motorisé avec capteurs et journalisation cloud, basé sur Python et microcontrôleurs."
+      },
+      {
+        "title": "AI Drone System",
+        "companyName": "Projet personnel",
+        "period": "2020 - 2021 (1 an)",
+        "description": "Drones autonomes avec vision par ordinateur et navigation IA, développés en Python, OpenCV et TensorFlow Lite."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "tabs": {
+      "contact": "Informations de contact",
+      "project": "Demande de projet"
+    },
+    "form": {
+      "name": "Votre nom",
+      "email": "Votre e-mail",
+      "message": "Message",
+      "send": "Envoyer le message",
+      "sending": "Envoi...",
+      "sent": "TRANSMISSION ENVOYÉE — CONFIRMÉE.",
+      "project": {
+        "title": "Titre du projet",
+        "objective": "Objectif en une phrase",
+        "scope": "Description / portée du projet",
+        "logic": "Logique de base / principe technique",
+        "dependencies": "Dépendances / outils",
+        "performance": "Objectifs de performance (vitesse, précision, etc.)",
+        "budgetLabel": "Budget estimé (USD) :",
+        "urgencyLabel": "Urgence :",
+        "notes": "Notes ou contraintes supplémentaires",
+        "submit": "Soumettre la demande de projet",
+        "submitting": "Soumission...",
+        "sent": "DEMANDE REÇUE — EN TRAITEMENT."
+      }
+    },
+    "urgency": {
+      "immediate": "Immédiate",
+      "high": "Haute",
+      "normal": "Normale",
+      "research": "Recherche uniquement"
+    },
+    "info": {
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "location": "Actuellement : Kayseri, Turquie"
+    }
+  }
+}

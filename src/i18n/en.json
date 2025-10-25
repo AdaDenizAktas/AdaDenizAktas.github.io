@@ -1,0 +1,268 @@
+{
+  "header": {
+    "location": "Current location: Kayseri, Turkey"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "home": {
+    "title": "Fullstack Engineer",
+    "summary": {
+      "part1": "Over a decade of experience delivering enterprise-grade systems in",
+      "medical": "medical",
+      "industrial": "industrial",
+      "and": "and",
+      "ai": "AI-driven",
+      "part2": "domains. Specialized in",
+      "part3": "microservices,",
+      "part4": "pipelines, and scalable backend architecture."
+    },
+    "cta": {
+      "projects": "View Projects",
+      "contact": "Contact Me"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "summary": "Fullstack Software Engineer with 10+ years of experience building scalable enterprise systems across medical, industrial, and marketing domains — unifying architecture, team leadership, and delivery focus.",
+    "expertise": [
+      {
+        "title": "Backend & Architecture",
+        "text": "C# .NET Core microservices, REST & SignalR, CQRS, SOLID, Clean Architecture, event-driven systems."
+      },
+      {
+        "title": "Frontend & Web",
+        "text": "Blazor, SPA lifecycle, TypeScript, responsive design, and complex enterprise UI frameworks."
+      },
+      {
+        "title": "DevOps & Cloud",
+        "text": "Docker, Azure DevOps, GitHub Actions, cloud-native CI/CD, observability and automation pipelines."
+      },
+      {
+        "title": "Testing & QA",
+        "text": "xUnit, NUnit, Selenium, Playwright, Postman, and strong TDD/BDD coverage and traceability."
+      },
+      {
+        "title": "Databases",
+        "text": "SQL Server, PostgreSQL, MySQL, Firebase; optimized query design and concurrency performance."
+      },
+      {
+        "title": "Leadership & Delivery",
+        "text": "Agile/Scrum leadership, product vision alignment, mentoring, and enterprise-scale delivery."
+      }
+    ]
+  },
+  "skills": {
+    "labels": {
+      "practices": "Practices",
+      "best": "Best",
+      "improvable": "Improvable",
+      "bad": "Bad"
+    },
+    "title": "Core Competencies",
+    "items": [
+      {
+        "title": "Backend Engineering",
+        "description": "C# .NET Core, Microservices, REST APIs, CQRS, Clean Architecture, SignalR",
+        "best": "Stateless services, clear separation of command/query logic, domain-driven modularization, and async event-driven flow.",
+        "improvable": "Tight coupling between APIs and DB models — adopt contracts + interfaces. Roadmap: isolate business logic, introduce message brokers, add failover patterns.",
+        "bad": "Massive service controllers, logic in controllers, circular dependencies, synchronous I/O in production flows."
+      },
+      {
+        "title": "Frontend Engineering",
+        "description": "Vue 3, TypeScript, Blazor, UI Composition, SPA Lifecycle, Progressive Enhancement",
+        "best": "Composable architecture, reactive state control, consistent component APIs, minimal DOM footprint.",
+        "improvable": "Overusing watchers and deep reactivity — move to computed pipelines. Roadmap: refactor heavy components into slots and composables.",
+        "bad": "Direct DOM manipulation, global state pollution, tight coupling between UI and logic."
+      },
+      {
+        "title": "Cloud & DevOps",
+        "description": "Docker, Azure DevOps, GitHub Actions, CI/CD, Cloud Deployment, Observability",
+        "best": "Immutable builds, declarative IaC, least privilege secrets handling, and pipeline versioning.",
+        "improvable": "Manual container linking — use Compose networking or service discovery. Roadmap: integrate environment matrix testing and ephemeral staging.",
+        "bad": "Storing secrets in YAML, building images on live agents, SSHing into production containers."
+      },
+      {
+        "title": "Databases & Persistence",
+        "description": "SQL Server, PostgreSQL, MySQL, MongoDB, Firebase, Query Optimization",
+        "best": "Index-aware schema design, transaction safety, CQRS split reads/writes, caching hot paths.",
+        "improvable": "Lack of monitoring — introduce slow query logs. Roadmap: shard by domain, apply read replicas, test migrations under load.",
+        "bad": "ORM misuse, raw concatenated queries, unbounded result sets, schema drift in CI/CD."
+      },
+      {
+        "title": "Quality & Automation",
+        "description": "xUnit, NUnit, Playwright, Selenium, Postman, Automated QA, Integration Testing",
+        "best": "Pipeline-based validation, isolated mocks, and test-driven infrastructure consistency.",
+        "improvable": "Low coverage on async code paths. Roadmap: enforce integration test gates, add mutation testing for logic coverage.",
+        "bad": "Manual testing reliance, test order dependency, shared state across tests."
+      },
+      {
+        "title": "Architecture & Leadership",
+        "description": "System Design, Team Leadership, Agile, CI/CD-first Culture, Fortune 500 Delivery",
+        "best": "Lead by demonstration, establish architectural standards, teach reasoning not obedience.",
+        "improvable": "Reactive leadership — build proactive mentorship cadence. Roadmap: define team-level autonomy layers and measurable trust metrics.",
+        "bad": "Code policing, gatekeeping reviews, emotional decisions over systemic evidence."
+      }
+    ]
+  },
+  "experience": {
+    "title": "Experience",
+    "items": [
+      {
+        "role": "Freelancing",
+        "company": "Independent Projects",
+        "period": "Jul 2025 – Present",
+        "description": "Working on diverse small-scale AI, web, and automation projects — exploring creative problem-solving and rapid prototyping."
+      },
+      {
+        "role": "Career Gap",
+        "company": "Health Recovery",
+        "period": "Nov 2024 – Jul 2025",
+        "description": "Focused on recovery, AI-assisted prototyping, and cloud-native architecture experiments."
+      },
+      {
+        "role": "Senior Fullstack Engineer",
+        "company": "Proxify – Getinge Medical AB",
+        "period": "Nov 2021 – Nov 2024",
+        "description": "Operated SimulationHub for hospital sterilization automation using C# .NET Core microservices, REST coordination, and Azure DevOps pipelines."
+      },
+      {
+        "role": "DevOps Manager",
+        "company": "Proxify – Shell Global R&D",
+        "period": "Feb 2022 – Mar 2022",
+        "description": "Managed CI/CD pipelines, automated dashboards, and secure analytics for R&D operations as a short-term concurrent assignment."
+      },
+      {
+        "role": "Fullstack Engineer / Media Manager",
+        "company": "One Ingage Marketing Inc.",
+        "period": "Feb 2021 – Oct 2021",
+        "description": "Developed analytics dashboards, CMS integrations, and Blazor-based marketing automation tools with reusable UI components."
+      },
+      {
+        "role": "Fullstack Engineer",
+        "company": "Indis Software Inc.",
+        "period": "Dec 2019 – Feb 2021",
+        "description": "Built scalable SaaS backends, optimized SQL Server queries, and enhanced QA automation pipelines using Selenium and Postman."
+      },
+      {
+        "role": "Fullstack Engineer",
+        "company": "Joker Software Inc.",
+        "period": "Jan 2019 – Sep 2019",
+        "description": "Developed ERP systems, implemented hardware automation logic, and maintained .NET-based legacy platforms."
+      },
+      {
+        "role": "Fullstack Engineer",
+        "company": "Safa Informatics",
+        "period": "Aug 2017 – Dec 2018",
+        "description": "Led ERP integration projects, managed API architecture, and improved backend reliability with optimized SQL structures."
+      }
+    ]
+  },
+  "common": {
+    "present": "Present",
+    "urgency": {
+      "immediate": "Immediate",
+      "high": "High",
+      "normal": "Normal",
+      "research": "Research-only"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "items": [
+      {
+        "title": "Simulation Hub",
+        "companyName": "Getinge Medical AB",
+        "period": "Nov 2021 - Nov 2024 (3 years)",
+        "description": "Medical device simulation platform for hospital sterilization automation, built with C# .NET Core microservices and REST coordination."
+      },
+      {
+        "title": "Automation Hub",
+        "companyName": "Getinge Medical AB",
+        "period": "Oct 2021 - Oct 2024 (3 years)",
+        "description": "Advanced hospital sterilization automation system with simulation and integration modules, automated xUnit test suites, and Dockerized deployment."
+      },
+      {
+        "title": "KolayCar",
+        "companyName": "INDIS Software INC",
+        "period": "Dec 2019 - Feb 2021 (1.5 years)",
+        "description": "Rental car management system with C# backend, SQL Server optimizations, and legacy WebForms frontends."
+      },
+      {
+        "title": "Joker ERP",
+        "companyName": "Joker Software INC",
+        "period": "Jan 2019 - Sep 2019 (0.75 years)",
+        "description": "End-to-end ERP system for manufacturing to retail, including Windows Forms interfaces and SQL Server optimization."
+      },
+      {
+        "title": "Epsilon",
+        "companyName": "Safa Informatics",
+        "period": "Aug 2017 - Dec 2018 (1.5 years)",
+        "description": "ERP integration system for major marketplaces, with backend in C# and Python, and microservice APIs."
+      },
+      {
+        "title": "Smart House",
+        "companyName": "Personal Project",
+        "period": "2022 - 2024 (2 years)",
+        "description": "Home automation system with IoT sensors, voice control, and remote monitoring using JavaScript, Python, and MQTT."
+      },
+      {
+        "title": "Smart Garage",
+        "companyName": "Personal Project",
+        "period": "2021 - 2022 (1 year)",
+        "description": "Garage automation system with motorized doors, sensors, and cloud logging using Python and microcontrollers."
+      },
+      {
+        "title": "AI Drone System",
+        "companyName": "Personal Project",
+        "period": "2020 - 2021 (1 year)",
+        "description": "Autonomous drones with computer vision and AI navigation using Python, OpenCV, and TensorFlow Lite."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "tabs": {
+      "contact": "Contact Info",
+      "project": "Project Request"
+    },
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "message": "Message",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "sent": "TRANSMISSION SENT — CONFIRMED.",
+      "project": {
+        "title": "Project Title",
+        "objective": "One-Sentence Objective",
+        "scope": "Project Description / Scope",
+        "logic": "Core Logic / Technical Principle",
+        "dependencies": "Dependencies / Tools",
+        "performance": "Performance Goals (speed, accuracy, etc.)",
+        "budgetLabel": "Estimated Budget (USD):",
+        "urgencyLabel": "Urgency:",
+        "notes": "Additional Notes or Constraints",
+        "submit": "Submit Project Request",
+        "submitting": "Submitting...",
+        "sent": "REQUEST RECEIVED — PROCESSING."
+      }
+    },
+    "urgency": {
+      "immediate": "Immediate",
+      "high": "High",
+      "normal": "Normal",
+      "research": "Research-only"
+    },
+    "info": {
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Current: Kayseri, Turkey"
+    }
+  }
+}
