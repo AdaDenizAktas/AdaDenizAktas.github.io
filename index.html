@@ -7,54 +7,40 @@
   <title>Vite App</title>
   <script>
     (() => {
-      const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-      link.rel = 'icon'; document.head.appendChild(link);
+      const link = document.querySelector("link[rel*='icon']") || document.createElement("link");
+      link.rel = "icon"; document.head.appendChild(link);
 
-      const c = document.createElement('canvas');
-      c.width = 64; c.height = 64;
-      const ctx = c.getContext('2d');
+      const c = document.createElement("canvas");
+      const size = 64;
+      c.width = size; c.height = size;
+      const ctx = c.getContext("2d");
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "bold 30px 'Segoe UI', sans-serif";
+
       let t = 0;
+      function draw() {
+        ctx.clearRect(0, 0, size, size);
 
-      function frame() {
-        ctx.clearRect(0, 0, 64, 64);
+        // Transparent background (no fill)
+        // Soft fading text with logical pulse
+        const alpha = 0.35 + 0.25 * Math.sin(t * 0.08);
+        ctx.fillStyle = `rgba(180, 190, 255, ${alpha})`;
+        ctx.fillText("A.D.A.", size / 2, size / 2);
 
-        // Background — deep space blue-black gradient
-        const bg = ctx.createRadialGradient(32, 32, 2, 32, 32, 32);
-        bg.addColorStop(0, '#0b0b15');
-        bg.addColorStop(1, '#010109');
-        ctx.fillStyle = bg;
-        ctx.fillRect(0, 0, 64, 64);
-
-        // Subtle rotating ring illusion
-        const ringCount = 3;
-        for (let i = 0; i < ringCount; i++) {
-          const phase = t * 0.03 + i * Math.PI / ringCount;
-          const radius = 20 + Math.sin(phase) * 2;
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(120,140,255,${0.15 + 0.1 * i})`; // faint misty blue, no neon
-          ctx.lineWidth = 1.2;
-          ctx.arc(32, 32, radius, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-
-        // Faint shimmer (slow pulse)
-        const pulse = (Math.sin(t * 0.05) + 1) / 2;
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(150,170,255,${0.12 + 0.08 * pulse})`;
-        ctx.arc(32, 32, 4 + pulse * 2, 0, Math.PI * 2);
-        ctx.fill();
-
-        link.href = c.toDataURL('image/png');
+        link.href = c.toDataURL("image/png");
         t++;
-        requestAnimationFrame(frame);
+        requestAnimationFrame(draw);
       }
-      frame();
+      draw();
     })();
   </script>
 
 
-  <script type="module" crossorigin src="/assets/index-FZ176Kw0.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-SJunzKhH.css">
+
+  <script type="module" crossorigin src="/assets/index-XovmHp_X.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/three-B5XxB57c.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-BYrrPXS1.css">
 </head>
 
 <body>
