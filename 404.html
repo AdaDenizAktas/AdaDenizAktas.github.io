@@ -16,36 +16,36 @@
             align-items: center;
             justify-content: center;
             color: #bcd3ff;
-            font-family: 'Segoe UI', monospace;
-            letter-spacing: 0.1em;
+            font-family: Segoe UI, monospace;
+            letter-spacing: .1em
         }
 
         .container {
             text-align: center;
-            animation: fadeIn 2s ease-in-out;
+            animation: fadeIn 2s ease-in-out
         }
 
         .glow {
             font-size: 4em;
             font-weight: 700;
-            text-shadow: 0 0 10px #4fa3ff, 0 0 20px #4fa3ff;
+            text-shadow: 0 0 6px #7aa2ff, 0 0 12px #7aa2ff
         }
 
         .hint {
             margin-top: 1em;
-            opacity: .8;
-            animation: pulse 2s infinite ease-in-out;
+            opacity: .85;
+            animation: pulse 2s infinite ease-in-out
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(20px)
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0)
             }
         }
 
@@ -53,11 +53,11 @@
 
             0%,
             100% {
-                opacity: .6;
+                opacity: .6
             }
 
             50% {
-                opacity: 1;
+                opacity: 1
             }
         }
     </style>
@@ -67,28 +67,26 @@
     <div class="container" id="msg" style="display:none;">
         <div class="glow">404</div>
         <div class="glow">LOST IN CONTINUUM</div>
-        <div class="hint">Recalibrating navigation systems...</div>
-        <div class="hint" style="font-size:0.9em;">Redirecting to home base...</div>
+        <div class="hint">Recalibrating navigation systems…</div>
+        <div class="hint" style="font-size:.9em;">Redirecting to home base…</div>
     </div>
-
     <script>
-        const validPaths = ["/", "/about", "/projects", "/experience", "/skills", "/contact"];
-        const path = location.pathname.replace(/\/+$/, "").toLowerCase() || "/";
-        const full = location.pathname + location.search + location.hash;
+        // Known client routes
+        const valid = new Set(['/', '/about', '/skills', '/experience', '/projects', '/contact'])
+        // Normalize path (strip trailing slashes, keep root as '/')
+        const p = (location.pathname.replace(/\/+$/, '') || '/').toLowerCase()
+        const full = location.pathname + location.search + location.hash
 
-        // Case 1: Vue page exists → redirect to SPA root and restore route
-        if (validPaths.includes(path)) {
-            sessionStorage.setItem("vue-spa-redirect", full);
-            window.location.replace("/");
-        }
-        // Case 2: Invalid → show 404 UI and redirect home after delay
-        else {
-            document.getElementById("msg").style.display = "block";
-            setTimeout(() => location.replace("/"), 5000);
+        if (valid.has(p)) {
+            sessionStorage.setItem('vue-spa-redirect', full)
+            // For user-site (adadenizaktas.github.io) root hosting
+            location.replace('/')
+        } else {
+            // Unknown path → show 404 then go home
+            document.getElementById('msg').style.display = 'block'
+            setTimeout(() => location.replace('/'), 5000)
         }
     </script>
-
-
 </body>
 
 </html>
