@@ -72,7 +72,7 @@
     </div>
     <script>
         // Known client routes
-        const valid = new Set(['/', '/about', '/skills', '/experience', '/projects', '/contact'])
+        const valid = new Set(['/', '/about', '/skills', '/experience', '/projects', '/contact', '/best-practices'])
         // Normalize path (strip trailing slashes, keep root as '/')
         const p = (location.pathname.replace(/\/+$/, '') || '/').toLowerCase()
         const full = location.pathname + location.search + location.hash
