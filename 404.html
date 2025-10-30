@@ -71,22 +71,28 @@
         <div class="hint" style="font-size:.9em;">Redirecting to home base…</div>
     </div>
     <script>
-        // Known client routes
-        const valid = new Set(['/', '/about', '/skills', '/experience', '/projects', '/contact', '/best-practices'])
-        // Normalize path (strip trailing slashes, keep root as '/')
-        const p = (location.pathname.replace(/\/+$/, '') || '/').toLowerCase()
+        const valid = new Set([
+            '/', '/about', '/skills', '/experience', '/projects', '/contact', '/best-practices'
+        ])
+
+        // Normalize path: remove trailing slash, lowercase, and strip ".html" if present
+        let path = location.pathname.toLowerCase()
+        path = path.replace(/\/+$/, '').replace(/\.html$/, '') || '/'
+
+        // Allow both with and without dash variations
+        if (!valid.has(path) && path === '/bestpractices') path = '/best-practices'
+
         const full = location.pathname + location.search + location.hash
 
-        if (valid.has(p)) {
+        if (valid.has(path)) {
             sessionStorage.setItem('vue-spa-redirect', full)
-            // For user-site (adadenizaktas.github.io) root hosting
             location.replace('/')
         } else {
-            // Unknown path → show 404 then go home
             document.getElementById('msg').style.display = 'block'
             setTimeout(() => location.replace('/'), 5000)
         }
     </script>
+
 </body>
 
 </html>
