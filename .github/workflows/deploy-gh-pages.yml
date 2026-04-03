@@ -1,5 +1,9 @@
-# .github/workflows/deploy-gh-pages.yml
-name: Build and Deploy:contentReference[oaicite:0]{index=0}ce
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - private-source
   workflow_dispatch:
 
 permissions:
@@ -42,9 +46,7 @@ jobs:
 
           git clone --branch gh-pages "$REPO" "$TEMP_DIR"
 
-          find "$TEMP_DIR" -mindepth 1 -maxdepth 1 \
-            ! -name '.git' \
-            -exec rm -rf {} +
+          find "$TEMP_DIR" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
 
           cp -R dist/* "$TEMP_DIR"/
 
