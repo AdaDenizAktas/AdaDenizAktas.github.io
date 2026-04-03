@@ -8,9 +8,13 @@ const routes = [
   { path: '/projects', name: 'Projects', component: () => import('../pages/Projects.vue') },
   { path: '/contact', name: 'Contact', component: () => import('../pages/Contact.vue') },
   { path: '/rift', name: 'Rift', component: () => import('../layouts/RiftLayout.vue') },
+  { path: '/best-practices', name: 'BestPractices', component: () => import('../pages/BestPractices.vue') },
 ]
 
-export default createRouter({
-  history: createWebHistory(),
+const router = createRouter({
+  history: createWebHistory('/'),
   routes
 })
+
+export default router
+

@@ -15,9 +15,9 @@
           <EnvelopeIcon class="h-5 w-5 text-blue-500 flex-shrink-0" />
           <span>Ada.deniz.aktas0@gmail.com</span>
         </a>
-        <a href="tel:+905541177404" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+        <a href="tel:+905531905724" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
           <PhoneIcon class="h-5 w-5 text-blue-500 flex-shrink-0" />
-          <span>+905541177404</span>
+          <span>+905531905724</span>
         </a>
         <a href="https://www.google.com/maps/place/Kayseri,+Turkey" target="_blank"
           class="flex items-center gap-2 hover:text-blue-400 transition-colors">
@@ -38,24 +38,45 @@
         </button>
       </div>
     </header>
+    <!-- Mobile Menu Toggle -->
+    <button @click="menuOpen = !menuOpen"
+      class="sm:hidden fixed top-4 right-4 z-50 bg-slate-800/70 border border-slate-600 rounded-md p-2 text-slate-300 hover:text-white transition-colors">
+      <svg v-if="!menuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
 
     <!-- Navigation -->
     <transition name="lang-phase" mode="out-in">
-      <nav :key="locale" class="flex gap-8 my-6 text-lg uppercase tracking-widest">
-        <router-link to="/" :class="['nav-link', { 'nav-active': $route.path === '/' }]">{{ t('nav.home')
-        }}</router-link>
-        <router-link to="/about" :class="['nav-link', { 'nav-active': $route.path === '/about' }]">{{ t('nav.about')
-        }}</router-link>
-        <router-link to="/skills" :class="['nav-link', { 'nav-active': $route.path === '/skills' }]">{{ t('nav.skills')
-        }}</router-link>
-        <router-link to="/experience" :class="['nav-link', { 'nav-active': $route.path === '/experience' }]">{{
-          t('nav.experience') }}</router-link>
-        <router-link to="/projects" :class="['nav-link', { 'nav-active': $route.path === '/projects' }]">{{
-          t('nav.projects') }}</router-link>
-        <router-link to="/contact" :class="['nav-link', { 'nav-active': $route.path === '/contact' }]">{{
-          t('nav.contact')
-        }}</router-link>
-      </nav>
+      <transition name="lang-phase" mode="out-in">
+        <nav :key="locale" :class="[
+          'flex flex-col sm:flex-row gap-6 sm:gap-8 my-6 text-lg uppercase tracking-widest items-center sm:static fixed top-16 left-0 w-full sm:w-auto bg-black/80 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-0 border-t sm:border-0 border-slate-700/50 sm:justify-center transition-all duration-300',
+          menuOpen ? 'opacity-100 visible z-[9999]' : 'opacity-0 invisible sm:visible sm:opacity-100 sm:z-auto'
+        ]">
+          <router-link to="/" @click="menuOpen = false" :class="['nav-link', { 'nav-active': $route.path === '/' }]">{{
+            t('nav.home') }}</router-link>
+          <router-link to="/about" @click="menuOpen = false"
+            :class="['nav-link', { 'nav-active': $route.path === '/about' }]">{{ t('nav.about') }}</router-link>
+          <router-link to="/skills" @click="menuOpen = false"
+            :class="['nav-link', { 'nav-active': $route.path === '/skills' }]">{{ t('nav.skills') }}</router-link>
+          <router-link to="/experience" @click="menuOpen = false"
+            :class="['nav-link', { 'nav-active': $route.path === '/experience' }]">{{ t('nav.experience')
+            }}</router-link>
+          <router-link to="/projects" @click="menuOpen = false"
+            :class="['nav-link', { 'nav-active': $route.path === '/projects' }]">{{ t('nav.projects') }}</router-link>
+          <router-link to="/best-practices" @click="menuOpen = false"
+            :class="['nav-link', { 'nav-active': $route.path === '/best-practices' }]">{{ t('nav.bestPractices')
+            }}</router-link>
+          <router-link to="/contact" @click="menuOpen = false"
+            :class="['nav-link', { 'nav-active': $route.path === '/contact' }]">{{ t('nav.contact') }}</router-link>
+        </nav>
+      </transition>
+
     </transition>
     <!-- Main Content -->
     <main id="website-content"
@@ -88,12 +109,15 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t, locale } = useI18n()
 
 import Website3DButton from '../components/Website3DButton.vue'
 import TardisButton from '../components/TardisButton.vue'
 import { MapPinIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/vue/24/outline'
+
+const menuOpen = ref(false)
 
 // script setup
 const changeLang = (lang) => {
@@ -103,7 +127,13 @@ const changeLang = (lang) => {
 
 </script>
 
-<style>
+<style lang="postcss">
+@media (max-width: 425px) {
+  nav {
+    font-size: 1rem;
+  }
+}
+
 #website-content {
   transform-style: preserve-3d;
   perspective: 1000px;

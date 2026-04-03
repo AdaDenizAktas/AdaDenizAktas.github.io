@@ -30,23 +30,11 @@
       </div>
 
       <!-- Contact Form -->
-      <div v-if="activeTab === 'contact'" key="contact"
-        class="glass-panel shadow-glass bg-slateGlass p-6 rounded-xl space-y-6 max-w-xl mx-auto"
-        style="background-color: rgba(30, 41, 59, 0.4);">
-        <a href="mailto:Ada.deniz.aktas0@gmail.com"
-          class="flex items-center gap-3 text-slate-300 hover:text-blue-300 transition-colors">
-          <EnvelopeIcon class="h-6 w-6 text-blue-400" />
-          <span>Ada.deniz.aktas0@gmail.com</span>
-        </a>
-        <a href="tel:+905541177404"
-          class="flex items-center gap-3 text-slate-300 hover:text-blue-300 transition-colors">
-          <PhoneIcon class="h-6 w-6 text-blue-400" />
-          <span>+90 554 117 7404</span>
-        </a>
-        <div class="flex items-center gap-3 text-slate-300">
-          <MapPinIcon class="h-6 w-6 text-blue-400" />
-          <span>{{ t('contact.info.location') }}</span>
-        </div>
+      <div v-if="activeTab === 'contact'" key="contact">
+        <h3 class="text-xl font-bold text-blue-400 uppercase tracking-widest text-center mb-4">
+          {{ t('contact.sections.contactTitle') }}
+        </h3>
+
 
         <form @submit.prevent="sendContact" class="mt-4 flex flex-col gap-4">
           <input v-model="contact.name" type="text" :placeholder="t('contact.form.name')" required class="input" />
@@ -68,8 +56,10 @@
       </div>
 
       <!-- Project Form -->
-      <div v-else key="project"
-        class="glass-panel shadow-glass bg-slateGlass p-6 rounded-xl space-y-6 max-w-xl mx-auto">
+      <div v-else key="project">
+        <h3 class="text-xl font-bold text-blue-400 uppercase tracking-widest text-center mb-4">
+          {{ t('contact.sections.projectTitle') }}
+        </h3>
         <form @submit.prevent="sendProject" class="grid gap-3">
           <input v-model="project.title" :placeholder="t('contact.form.project.title')" required class="input" />
           <input v-model="project.objective" :placeholder="t('contact.form.project.objective')" required
@@ -91,14 +81,15 @@
               <input v-model.number="project.budget" type="number" min="0" step="50" class="input w-full pr-12 appearance-none [appearance:textfield]
                     [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" />
               <div
-                class="absolute right-2 top-1/2 -translate-y-1/2 flex flex-col items-center text-blue-400/70 hover:text-blue-300 transition-all">
+                class="absolute right-2 top-1/2 -translate-y-1/2 flex flex-col items-center text-blue-400/70 hover:text-blue-300 transition-all space-y-0.5">
+
                 <button type="button" @click="project.budget += 50" class="hover:scale-110">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3">
                     <path fill-rule="evenodd" d="M10 4l4 6H6l4-6z" clip-rule="evenodd" />
                   </svg>
                 </button>
                 <button type="button" @click="project.budget = Math.max(0, project.budget - 50)"
-                  class="hover:scale-110 mt-1">
+                  class="hover:scale-110">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                     class="w-3 h-3 rotate-180">
                     <path fill-rule="evenodd" d="M10 4l4 6H6l4-6z" clip-rule="evenodd" />
@@ -109,7 +100,8 @@
           </div>
 
           <!-- Urgency -->
-          <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
+          <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full">
+
             <label class="text-slate-400 w-40">{{ t('contact.form.project.urgencyLabel') }}</label>
             <div class="flex-1">
               <CustomSelect v-model="project.urgency" :options="urgencyOptions" />
@@ -171,6 +163,12 @@ function tabClass(tab) {
     activeTab.value === tab ? 'border-blue-500 text-blue-400' : 'border-transparent text-slate-400 hover:text-blue-300'
   ]
 }
+watch(activeTab, async () => {
+  await nextTick()
+  if (renderer && rootEl.value) {
+    renderer.setSize(bgCanvas.value.clientWidth, rootEl.value.offsetHeight)
+  }
+})
 
 async function sendContact() {
   if (!contact.value.name || !contact.value.email || !contact.value.message) return
@@ -247,25 +245,49 @@ onMounted(() => {
   renderer.setPixelRatio(window.devicePixelRatio)
   camera.position.z = 3
 
-  const starCount = window.innerWidth < 768 ? 400 : 900
-  const geo = new THREE.BufferGeometry()
-  const pos = new Float32Array(starCount * 3)
-  const col = new Float32Array(starCount * 3)
-  const color = new THREE.Color()
+  // --- Enhanced Starfield (more visible, adaptive brightness) ---
+  const isMobile = window.innerWidth < 425;
+  const isTablet = window.innerWidth < 768;
+  const starCount = isMobile ? 1500 : isTablet ? 900 : 700;
+
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(starCount * 3);
+  const col = new Float32Array(starCount * 3);
+  const color = new THREE.Color();
+
   for (let i = 0; i < starCount; i++) {
-    const i3 = i * 3
-    pos[i3] = (Math.random() - 0.5) * 400
-    pos[i3 + 1] = (Math.random() - 0.5) * 400
-    pos[i3 + 2] = (Math.random() - 0.5) * 400
-    color.setHSL(0.6 + Math.random() * 0.1, 0.6, 0.9 + Math.random() * 0.05)
-    col[i3] = color.r; col[i3 + 1] = color.g; col[i3 + 2] = color.b
+    const i3 = i * 3;
+    pos[i3] = (Math.random() - 0.5) * 500;
+    pos[i3 + 1] = (Math.random() - 0.5) * 500;
+    pos[i3 + 2] = (Math.random() - 0.5) * 500;
+
+    // brighter hue range for depth contrast
+    const hue = 0.58 + Math.random() * 0.1; // cooler blue spectrum
+    const lightness = isMobile ? 0.95 : 0.85 + Math.random() * 0.05;
+    color.setHSL(hue, 0.5, lightness);
+
+    col[i3] = color.r;
+    col[i3 + 1] = color.g;
+    col[i3 + 2] = color.b;
   }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-  geo.setAttribute('color', new THREE.BufferAttribute(col, 3))
-  stars = new THREE.Points(geo, new THREE.PointsMaterial({
-    vertexColors: true, size: 0.07, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending
-  }))
-  scene.add(stars)
+
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+
+  stars = new THREE.Points(
+    geo,
+    new THREE.PointsMaterial({
+      vertexColors: true,
+      size: isMobile ? 0.18 : isTablet ? 0.1 : 0.07,
+      transparent: true,
+      opacity: isMobile ? 1.0 : 0.85,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    })
+  );
+
+  scene.add(stars);
+
 
   renderer.setSize(canvas.clientWidth, rootEl.value.offsetHeight)
   window.addEventListener('resize', () => renderer.setSize(canvas.clientWidth, rootEl.value.offsetHeight))
@@ -281,7 +303,14 @@ onMounted(() => {
 </script>
 
 
-<style scoped>
+<style scoped lang="postcss">
+
+/* Ensure CustomSelect aligns properly beside label */
+.flex-wrap .relative.w-full {
+  min-width: 200px;
+  flex: 1;
+}
+
 .themed-textarea {
   resize: none;
   /* disable browser resizer completely */

@@ -3,8 +3,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: '/',
   plugins: [
     vue(),
     vueDevTools(),
@@ -14,21 +14,29 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-  // <-- Added font handling for PrimeIcons
   css: {
     preprocessorOptions: {
       css: {
-        // ensure fonts in node_modules/primeicons are processed
         additionalData: `@import "primeicons/primeicons.css";`
       }
     }
   },
-  // Assets include for fonts
   assetsInclude: ['**/node_modules/primeicons/fonts/*'],
-  server: {
-    fs: {
-      // allow serving files from project root & node_modules
-      allow: ['.','node_modules']
+  build: {
+    chunkSizeWarningLimit: 1200,
+    outDir: 'dist',
+
+    // Optional code-splitting logic
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          three: ['three'],
+          firebase: ['firebase/app', 'firebase/firestore']
+        }
+      }
     }
+  },
+  server: {
+    fs: { allow: ['.', 'node_modules'] }
   }
 })

@@ -3,37 +3,70 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vite App</title>
+  <title>A.D.A.</title>
+  <meta name="description"
+    content="Continuum Layer — Interactive dimensional portfolio and applied logic experiments by Ada Deniz Aktaş.">
+
   <script>
     (() => {
-      const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-      link.rel = 'icon'; document.head.appendChild(link);
+      const link = document.querySelector("link[rel*='icon']") || document.createElement("link");
+      link.rel = "icon";
+      document.head.appendChild(link);
 
-      const c = document.createElement('canvas');
-      c.width = 64; c.height = 64;
-      const x = c.getContext('2d');
+      const c = document.createElement("canvas");
+      const size = 64;
+      c.width = c.height = size;
+      const ctx = c.getContext("2d");
+      ctx.translate(size / 2, size / 2);
+
       let t = 0;
-
       function frame() {
-        x.clearRect(0, 0, 64, 64);
-        const g = x.createRadialGradient(32, 32, 4, 32, 32, 28);
-        const hue = (t % 360);
-        g.addColorStop(0, `hsl(${hue}, 100%, 70%)`);
-        g.addColorStop(1, 'hsl(220, 60%, 10%)');
-        x.fillStyle = g;
-        x.beginPath();
-        x.arc(32, 32, 28, 0, Math.PI * 2);
-        x.fill();
+        ctx.clearRect(-size / 2, -size / 2, size, size);
 
-        link.href = c.toDataURL('image/png');
-        t += 3;
+        // central faint sun
+        ctx.beginPath();
+        const sunGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 10);
+        sunGradient.addColorStop(0, "rgba(200,220,255,0.9)");
+        sunGradient.addColorStop(1, "rgba(200,220,255,0.0)");
+        ctx.fillStyle = sunGradient;
+        ctx.arc(0, 0, 10, 0, Math.PI * 2);
+        ctx.fill();
+
+        // orbit path (subtle)
+        ctx.strokeStyle = "rgba(180,200,255,0.15)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(0, 0, 18, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // planet
+        const px = Math.cos(t / 40) * 18;
+        const py = Math.sin(t / 40) * 18;
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(150,170,255,0.8)";
+        ctx.arc(px, py, 3.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // moon
+        const mx = px + Math.cos(t / 10) * 5;
+        const my = py + Math.sin(t / 10) * 5;
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(220,230,255,0.8)";
+        ctx.arc(mx, my, 1.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        link.href = c.toDataURL("image/png");
+        t++;
         requestAnimationFrame(frame);
       }
       frame();
     })();
   </script>
+
+
+
+
 
 </head>
 

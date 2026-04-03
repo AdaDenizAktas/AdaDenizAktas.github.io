@@ -8,7 +8,8 @@
     "skills": "Compétences",
     "experience": "Expérience",
     "projects": "Projets",
-    "contact": "Contact"
+    "contact": "Contact",
+    "bestPractices": "Bonnes pratiques"
   },
   "home": {
     "title": "Ingénieure Fullstack",
@@ -112,11 +113,24 @@
   },
   "experience": {
     "title": "Expérience",
+    "supportProject": "Soutenir le projet →",
     "items": [
+      {
+  "role": "Architecte Systèmes Principal / Ingénieur Full-Stack",
+  "company": "Ankerdata (Projet soutenu par un investisseur)",
+  "period": "Déc 2025 – Présent",
+  "description": "Conçoit et met en œuvre la plateforme complète : microservices basés sur ABP, authentification et passerelle API, ainsi qu’un frontend Angular, fournissant un système de gestion hôtelière complet de l’infrastructure à l’interface utilisateur."
+},
+      {
+        "role": "Développeur Backend Principal",
+        "company": "Voidlight Studios",
+        "period": "Nov 2025 – déc. 2025",
+        "description": "Créant le backend de Breakdown 25 avec des systèmes de jeu évolutifs, des API et des services en temps réel tout en ajoutant des détails cool et ludiques qui renforcent un monde vivant dynamique."
+      },
       {
         "role": "Freelance",
         "company": "Projets indépendants",
-        "period": "juil. 2025 – présent",
+        "period": "juil. 2025 – oct. 2025",
         "description": "Travail sur divers projets d’IA, de web et d’automatisation à petite échelle — axé sur la résolution créative de problèmes et le prototypage rapide."
       },
       {
@@ -226,6 +240,10 @@
     ]
   },
   "contact": {
+    "sections": {
+      "contactTitle": "Contact Direct",
+      "projectTitle": "Demande de Projet"
+    },
     "title": "Contact",
     "tabs": {
       "contact": "Informations de contact",
@@ -264,5 +282,1210 @@
       "phone": "Téléphone",
       "location": "Actuellement : Kayseri, Turquie"
     }
+  },
+  "best": {
+    "title": "Bonnes pratiques",
+    "subtitle": "Ces bonnes pratiques proviennent de projets réels – apprises à la dure, perfectionnées au fil du temps.",
+    "filterSkill": "Filtrer par compétence :",
+    "clear": "Effacer",
+    "definition": "Définition",
+    "keyRules": "Règles clés",
+    "whenToUse": "Quand l’utiliser",
+    "whenToAvoid": "Quand l’éviter",
+    "pitfalls": "Pièges",
+    "examples": "Exemples",
+    "then": "Avant",
+    "now": "Aujourd’hui",
+    "expectedResults": "Résultats attendus",
+    "references": "Références",
+    "example": "Exemple",
+    "practices": [
+      {
+        "id": "csharp-gc-basics",
+        "title": "Collecteur de déchets C# : comment la mémoire se nettoie elle-même",
+        "summary": "Le Garbage Collector (GC) libère automatiquement la mémoire ; contrôler les allocations évite les saccades, pauses et pics CPU.",
+        "skills": [
+          "C#",
+          ".NET",
+          "Performance"
+        ],
+        "pillars": {
+          "definition": "Le GC suit les objets inaccessibles et récupère la mémoire par générations ; Gen0/Gen1 pour les objets à courte durée de vie, Gen2 + LOH pour les longs ou volumineux.",
+          "whenToUse": [
+            "Utiliser des pools pour les tampons temporaires ou les tableaux réutilisables.",
+            "Utiliser spans/stackalloc pour les petites données transitoires afin de réduire les allocations sur le tas."
+          ],
+          "whenToAvoid": [
+            "Éviter la création d’objets dans les boucles serrées ou le code exécuté à chaque frame.",
+            "Éviter les finalizers sauf nécessité (encapsulation de ressources non gérées)."
+          ],
+          "keyRules": [
+            "Profiler les allocations avec PerfView / dotnet-trace / VS Profiler.",
+            "Préférer les structures (struct) petites et immuables pour les chemins critiques.",
+            "Regrouper le travail pour amortir les allocations.",
+            "Utiliser StringBuilder ou la mise en forme composite plutôt que la concaténation dans les boucles.",
+            "Mettre en pool les grands tableaux (ArrayPool<byte>) pour réduire la pression sur le LOH.",
+            "Utiliser IAsyncDisposable pour libérer rapidement les ressources asynchrones.",
+            "N’utiliser GC.TryStartNoGCRegion que sur preuve solide et pour de courtes fenêtres."
+          ],
+          "pitfalls": [
+            "Boxing fréquent ou concaténation de chaînes → gonflement du tas.",
+            "Les grands tableaux fragmentent le LOH s’ils sont souvent alloués/libérés.",
+            "Des références persistantes maintiennent les objets vivants involontairement.",
+            "Une sur-utilisation des finalizers ralentit la libération."
+          ],
+          "examples": [
+            "Réutilisation de tampons dans les points de terminaison d’envoi de fichiers HTTP.",
+            "Mise en pool d’octets d’images dans les boucles de rendu Unity."
+          ]
+        },
+        "history": {
+          "then": "Réglage manuel du GC et pauses visibles fréquentes.",
+          "now": "Le GC concurrent/de fond compactant rend l’ajustement quasi automatique ; la compaction LOH et la mise en pool sont devenues standards.",
+          "dateThen": "Années 2010",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "// Réutilisation efficace avec ArrayPool\\nvar pool = ArrayPool<byte>.Shared;\\nbyte[] buffer = pool.Rent(1024);\\ntry {\\n  await stream.ReadAsync(buffer.AsMemory(0, 1024), ct);\\n} finally {\\n  pool.Return(buffer, clearArray: false);\\n}",
+        "references": [
+          "https://learn.microsoft.com/dotnet/standard/garbage-collection/",
+          "https://devblogs.microsoft.com/dotnet/understanding-the-garbage-collector/",
+          "https://learn.microsoft.com/dotnet/standard/garbage-collection/fundamentals"
+        ]
+      },
+      {
+        "id": "csharp-value-vs-reference",
+        "title": "Types valeur vs référence : comment les données vivent en mémoire",
+        "summary": "Les types valeur se copient ; les types référence partagent une identité ; à choisir selon taille, mutabilité et sémantique.",
+        "skills": [
+          "C#",
+          "Performance"
+        ],
+        "pillars": {
+          "definition": "Un type valeur stocke les données en ligne et se copie par valeur ; un type référence stocke un pointeur et se copie par référence.",
+          "whenToUse": [
+            "Utiliser de petites structures immuables pour les boucles serrées et les DTO.",
+            "Utiliser des classes pour l’identité, le polymorphisme et la durée de vie partagée."
+          ],
+          "whenToAvoid": [
+            "Éviter les grandes structures mutables (>32–64 octets).",
+            "Éviter le boxing (conversion struct → object/interface) sur les chemins critiques."
+          ],
+          "keyRules": [
+            "Utiliser readonly struct / record struct pour exprimer l’immuabilité.",
+            "Passer les grandes structures readonly par `in` pour éviter les copies.",
+            "Préférer les records pour l’égalité par valeur.",
+            "Attention aux mutations de struct via propriétés/foreach (copie).",
+            "Utiliser les interfaces avec parcimonie sur les structs pour éviter le boxing.",
+            "Mesurer avec BenchmarkDotNet avant de changer de type."
+          ],
+          "pitfalls": [
+            "Allocations implicites via boxing dans LINQ sur interfaces.",
+            "Modifier un struct extrait d’un dictionnaire modifie une copie."
+          ],
+          "examples": [
+            "`Point` en record struct pour des coordonnées.",
+            "`Person` en classe avec identité et comportement."
+          ]
+        },
+        "history": {
+          "then": "Les classes dominaient ; les structs étaient évités.",
+          "now": "Span<T>, ref structs et records ont normalisé le design orienté valeur.",
+          "dateThen": "Années 2000",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "public readonly record struct Point(int X, int Y);\\nvar a = new Point(3,4);\\nvar b = a; // copie\\nConsole.WriteLine(a == b); // True",
+        "references": [
+          "https://learn.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/",
+          "https://learn.microsoft.com/dotnet/csharp/fundamentals/types/records"
+        ]
+      },
+      {
+        "id": "csharp-async-vs-background",
+        "title": "Async vs services d’arrière-plan : tâches courtes vs boucles longues",
+        "summary": "Async/await optimise le travail lié à l’I/O ; BackgroundService héberge des boucles durables avec cycle de vie et injection de dépendances.",
+        "skills": [
+          "C#",
+          ".NET",
+          "Architecture"
+        ],
+        "pillars": {
+          "definition": "`async/await` rend la main durant les attentes ; `BackgroundService` exécute des boucles supervisées et annulables dans l’hôte.",
+          "whenToUse": [
+            "Utiliser async dans les contrôleurs/handlers pour l’évolutivité I/O-bound.",
+            "Utiliser BackgroundService pour les consommateurs de file, planificateurs et observateurs.",
+            "Utiliser channels/flux asynchrones pour la contre-pression et les pipelines."
+          ],
+          "whenToAvoid": [
+            "Éviter Task.Run pour l’I/O ; cela bloque des threads.",
+            "Éviter les attentes bloquantes (Result/Wait) dans un contexte async."
+          ],
+          "keyRules": [
+            "Propager CancellationToken de bout en bout.",
+            "Intercepter et journaliser les exceptions dans la boucle de travail.",
+            "Utiliser PeriodicTimer pour les tâches périodiques.",
+            "Limiter la concurrence via SemaphoreSlim/Channel.",
+            "Émettre des sondes de santé / disponibilité pour les orchestrateurs.",
+            "Rendre les boucles idempotentes et sûres au redémarrage.",
+            "Enregistrer les IHostedService via AddHostedService."
+          ],
+          "pitfalls": [
+            "Les tâches « fire-and-forget » perdent les exceptions.",
+            "Affamement du pool de threads par du sync-over-async.",
+            "Parallélisme non borné saturant les services aval."
+          ],
+          "examples": [
+            "Consommateur Kafka / Service Bus en BackgroundService.",
+            "HTTP fan-out avec async/await et limiteurs de concurrence."
+          ]
+        },
+        "history": {
+          "then": "BackgroundWorker/ThreadPool avec arrêt manuel.",
+          "now": "Generic Host avec DI, sondes de santé et arrêt gracieux.",
+          "dateThen": "Avant .NET Core",
+          "dateNow": ".NET 6+"
+        },
+        "exampleCode": "public sealed class Worker : BackgroundService {\\n  protected override async Task ExecuteAsync(CancellationToken ct) {\\n    var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));\\n    while (await timer.WaitForNextTickAsync(ct)) {\\n      await ProcessOnceAsync(ct);\\n    }\\n  }\\n}",
+        "references": [
+          "https://learn.microsoft.com/dotnet/core/extensions/background-services",
+          "https://learn.microsoft.com/dotnet/csharp/asynchronous-programming/"
+        ]
+      },
+      {
+        "id": "csharp-exception-handling",
+        "title": "Exceptions : échouer vite, gérer une fois, journaliser avec contexte",
+        "summary": "Utiliser les exceptions uniquement pour les chemins exceptionnels ; centraliser la gestion, ajouter le contexte, éviter de les masquer.",
+        "skills": [
+          "C#",
+          ".NET",
+          "Architecture"
+        ],
+        "pillars": {
+          "definition": "Les exceptions déroulent la pile jusqu’à un gestionnaire ; les utiliser avec parcimonie et centralement pour garder des chemins clairs.",
+          "whenToUse": [
+            "À utiliser pour des états vraiment exceptionnels et irrécupérables.",
+            "Utiliser des filtres/middlewares pour mapper les exceptions aux réponses HTTP."
+          ],
+          "whenToAvoid": [
+            "Éviter d’utiliser des exceptions pour le flux de contrôle dans les chemins critiques.",
+            "Éviter les captures globales sans journalisation ni métriques."
+          ],
+          "keyRules": [
+            "Lever tôt avec des types précis (ArgumentException, InvalidOperation).",
+            "Joindre des ID de corrélation et le contexte de requête aux logs.",
+            "Mapper les exceptions métier vers des réponses 4xx ; les erreurs système vers 5xx.",
+            "Préférer Result/OneOf pour les échecs métier attendus.",
+            "Ne jamais cacher les exceptions ; les convertir en télémétrie exploitable.",
+            "Inclure la pile et les entrées clés, masquer les secrets."
+          ],
+          "pitfalls": [
+            "Exceptions avalées silencieusement.",
+            "Capture de System.Exception dans des couches profondes.",
+            "Lancer dans un bloc finally masque la cause initiale."
+          ],
+          "examples": [
+            "Middleware global ASP.NET Core → ProblemDetails.",
+            "DomainValidationException → 422 Unprocessable Entity."
+          ]
+        },
+        "history": {
+          "then": "Try/catch dispersés sans cohérence.",
+          "now": "Middleware d’exception central, ProblemDetails, journalisation structurée.",
+          "dateThen": "ASP.NET",
+          "dateNow": "ASP.NET Core"
+        },
+        "exampleCode": "app.UseExceptionHandler(\"/error\");\\napp.Map(\"/error\", (HttpContext ctx) => {\\n  var feat = ctx.Features.Get<IExceptionHandlerFeature>();\\n  // map feat.Error -> ProblemDetails\\n});",
+        "references": [
+          "https://learn.microsoft.com/aspnet/core/fundamentals/error-handling",
+          "https://datatracker.ietf.org/doc/html/rfc7807"
+        ]
+      },
+      {
+        "id": "dotnet-logging-observability",
+        "title": "Observabilité : logs, métriques et traces pour répondre à « Pourquoi ? »",
+        "summary": "Produire des logs structurés, des métriques clés, et des traces distribuées ; les corréler avec des identifiants communs.",
+        "skills": [
+          ".NET",
+          "Architecture",
+          "Devops",
+          "Performance"
+        ],
+        "pillars": {
+          "definition": "L’observabilité combine les logs (ce qui s’est passé), les métriques (combien), et les traces (où/pourquoi) pour expliquer le comportement.",
+          "whenToUse": [
+            "Utiliser la journalisation structurée dans chaque service.",
+            "Utiliser OpenTelemetry pour une exportation neutre vis-à-vis du fournisseur."
+          ],
+          "whenToAvoid": [
+            "Éviter les logs en texte brut sans structure.",
+            "Éviter les étiquettes à forte cardinalité qui explosent les coûts."
+          ],
+          "keyRules": [
+            "Utiliser des ID de corrélation/de trace sur les requêtes.",
+            "Journaliser à la source de vérité une seule fois ; résumer ailleurs.",
+            "Définir des SLO sur latence, taux d’erreur, saturation.",
+            "Masquer les PII/secrets en périphérie.",
+            "Échantillonner les traces à haut volume.",
+            "Lier tableaux de bord et alertes à des résultats métier.",
+            "Utiliser des conventions sémantiques cohérentes."
+          ],
+          "pitfalls": [
+            "Spam de logs masquant les signaux utiles.",
+            "Explosion de cardinalité dans les métriques (tags user_id).",
+            "Contexte manquant compliquant la résolution d’incidents."
+          ],
+          "examples": [
+            "Instrumentation OTel + collecteur → Grafana Tempo / Prometheus.",
+            "Logs Serilog JSON → indexation ELK / OpenSearch."
+          ]
+        },
+        "history": {
+          "then": "Logs texte simples et grep.",
+          "now": "OpenTelemetry, logs sémantiques, alertes basées sur les SLO.",
+          "dateThen": "Années 2010",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "builder.Services.AddOpenTelemetry()\\n  .WithTracing(t => t.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation())\\n  .WithMetrics(m => m.AddAspNetCoreInstrumentation());",
+        "references": [
+          "https://opentelemetry.io/docs/",
+          "https://learn.microsoft.com/dotnet/core/diagnostics/"
+        ]
+      },
+      {
+        "id": "dotnet-configuration-options",
+        "title": "Configuration & Options : une seule source, plusieurs environnements",
+        "summary": "Lier des options typées à partir de fournisseurs ; valider, recharger et garder les secrets hors du code.",
+        "skills": [
+          ".NET",
+          "Architecture"
+        ],
+        "pillars": {
+          "definition": "Le modèle Options mappe la configuration hiérarchique (JSON, env, secrets) vers des classes typées avec validation.",
+          "whenToUse": [
+            "Bascules de fonctionnalités, points de terminaison, limites de politiques.",
+            "Déploiements multi-environnements avec surcharges."
+          ],
+          "whenToAvoid": [
+            "Éviter les variables globales statiques ; préférer IOptionsSnapshot pour les scopes web.",
+            "Éviter d’utiliser Configuration[\"x\"] partout dans le code."
+          ],
+          "keyRules": [
+            "Valider au démarrage (ValidateDataAnnotations/ValidateOnStart).",
+            "Utiliser Secret Managers / Vault ; ne jamais commettre de secrets.",
+            "Activer ReloadOnChange pour JSON uniquement en dev.",
+            "Rendre la config immuable à l’exécution ; pousser les mises à jour via déploiement.",
+            "Nommer les clés par contexte limité (bounded context).",
+            "Exposer les infos via des endpoints santé/info avec précaution."
+          ],
+          "pitfalls": [
+            "Configuration mutable au runtime → comportement non déterministe.",
+            "Fuites de secrets via logs ou dumps."
+          ],
+          "examples": [
+            "IOptionsMonitor pour les services d’arrière-plan nécessitant rechargement en direct.",
+            "Azure App Configuration / Consul pour les paramètres centralisés."
+          ]
+        },
+        "history": {
+          "then": "web.config avec transformations XML.",
+          "now": "Configuration par fournisseurs, options typées et validation intégrée.",
+          "dateThen": "ASP.NET",
+          "dateNow": "ASP.NET Core"
+        },
+        "exampleCode": "builder.Services.AddOptions<MyLimits>()\\n  .Bind(builder.Configuration.GetSection(\"Limits\"))\\n  .ValidateDataAnnotations()\\n  .ValidateOnStart();",
+        "references": [
+          "https://learn.microsoft.com/aspnet/core/fundamentals/configuration/",
+          "https://learn.microsoft.com/aspnet/core/fundamentals/configuration/options"
+        ]
+      },
+      {
+        "id": "efcore-performance",
+        "title": "Performance EF Core : requêtes rapides, suivi prévisible",
+        "summary": "Projeter uniquement ce dont vous avez besoin, suivre uniquement quand nécessaire et regrouper les allers-retours.",
+        "skills": [
+          "C#",
+          ".NET",
+          "SQL",
+          "Performance"
+        ],
+        "pillars": {
+          "definition": "EF Core traduit LINQ en SQL ; le suivi attache les entités pour la détection de changements ; la projection évite les graphes lourds.",
+          "whenToUse": [
+            "Utiliser AsNoTracking pour les requêtes en lecture seule.",
+            "Projeter via Select vers des DTO pour réduire la charge utile."
+          ],
+          "whenToAvoid": [
+            "Éviter le N+1 en incluant les données liées ou en regroupant les requêtes.",
+            "Éviter l’évaluation côté client en production."
+          ],
+          "keyRules": [
+            "Utiliser les requêtes compilées pour les chemins critiques.",
+            "Préférer les opérations groupées/outils pour les mises à jour massives.",
+            "Vérifier les index et les plans de requêtes.",
+            "Diviser les requêtes très larges (AsSplitQuery).",
+            "Utiliser des transactions pour la cohérence multi-commandes.",
+            "Paginer par clé (keyset) pour grands ensembles."
+          ],
+          "pitfalls": [
+            "Le lazy loading non intentionnel multiplie les allers-retours.",
+            "Mapper des graphes entiers en mémoire pour des lectures simples."
+          ],
+          "examples": [
+            "Projection vers une liste allégée pour les grilles.",
+            "Pagination par clé sur des flux triés par date."
+          ]
+        },
+        "history": {
+          "then": "EF6 avec suivi lourd et lazy loading par défaut.",
+          "now": "EF Core avec requêtes compilées, pas d’éval client par défaut.",
+          "dateThen": "Ère EF6",
+          "dateNow": "EF Core 7/8"
+        },
+        "exampleCode": "var items = await db.Posts\\n  .AsNoTracking()\\n  .OrderByDescending(p => p.PublishedAt)\\n  .Select(p => new PostListItem { p.Id, p.Title })\\n  .ToListAsync(ct);",
+        "references": [
+          "https://learn.microsoft.com/ef/core/performance/",
+          "https://learn.microsoft.com/ef/core/querying/related-data"
+        ]
+      },
+      {
+        "id": "csharp-linq-pitfalls",
+        "title": "Pièges LINQ : exécution différée, allocations et surprises",
+        "summary": "Comprendre l’exécution différée, matérialiser intentionnellement et éviter les allocations cachées.",
+        "skills": [
+          "C#",
+          "Performance"
+        ],
+        "pillars": {
+          "definition": "La plupart des requêtes LINQ sont différées jusqu’à l’énumération ; certains opérateurs (ToList, GroupBy) mettent en mémoire tampon.",
+          "whenToUse": [
+            "Utiliser LINQ pour la clarté dans les chemins non critiques.",
+            "Utiliser des boucles impératives quand les allocations ou branches sont importantes."
+          ],
+          "whenToAvoid": [
+            "Éviter LINQ dans les boucles ultra-critiques par élément.",
+            "Éviter le mélange d’évaluations client avec les requêtes EF."
+          ],
+          "keyRules": [
+            "Mesurer les allocations avec BenchmarkDotNet.",
+            "Utiliser `.Any()` plutôt que `.Count() > 0`.",
+            "Préférer `.Select` pour façonner les données tôt.",
+            "Éviter les appels répétés à `.ToList()` ; matérialiser une fois.",
+            "Être explicite sur l’ordre ; LINQ ne garantit rien sans tri.",
+            "Utiliser `Span`/`Memory` pour le traitement intensif de tableaux."
+          ],
+          "pitfalls": [
+            "Énumération multiple d’un IEnumerable.",
+            "Complexité O(n²) involontaire via LINQ imbriqué.",
+            "Captures incorrectes de variables dans les lambdas (anciens codes)."
+          ],
+          "examples": [
+            "Projeter uniquement les champs nécessaires pour les API.",
+            "Remplacer `.Where().FirstOrDefault()` par `.FirstOrDefault(predicate)`."
+          ]
+        },
+        "history": {
+          "then": "LINQ utilisé partout sans mesure.",
+          "now": "LINQ ciblé avec profilage et alternatives basées sur Span.",
+          "dateThen": "Années 2010",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "if (list.Any(x => x.Id == id)) { /* existence rapide */ }",
+        "references": [
+          "https://learn.microsoft.com/dotnet/csharp/programming-guide/concepts/linq/"
+        ]
+      },
+      {
+        "id": "sdlc-overview",
+        "title": "Cycle de vie du logiciel : du plan à la production",
+        "summary": "Compresser Planifier→Construire→Tester→Publier→Surveiller→Apprendre grâce à l’automatisation et aux boucles de retour claires.",
+        "skills": [
+          "Devops",
+          "Architecture",
+          "GIT",
+          "DOCKER",
+          "CI/CD"
+        ],
+        "pillars": {
+          "definition": "Le SDLC est un système itératif de découverte, livraison et apprentissage ; DevOps intègre les opérations dans la boucle.",
+          "whenToUse": [
+            "Utiliser CI/CD pour tout service livré en continu.",
+            "Utiliser le développement basé sur trunk avec branches courtes."
+          ],
+          "whenToAvoid": [
+            "Éviter les chaînes de publication manuelles longues.",
+            "Éviter les environnements uniques non gérés par IaC."
+          ],
+          "keyRules": [
+            "Automatiser la validation, le linting, les analyses de sécurité et le déploiement.",
+            "Traiter l’infrastructure comme du code versionné, révisé via PR.",
+            "Prioriser l’observabilité : logs, métriques, traçage.",
+            "Définir des SLO et budgets d’erreur.",
+            "Utiliser des feature flags pour les déploiements risqués.",
+            "Déployer avec blue/green ou canary pour des mises à jour sûres.",
+            "Toujours avoir un plan de retour arrière (rollback) testé."
+          ],
+          "pitfalls": [
+            "Ignorer la surveillance masque les régressions.",
+            "Pas de rollback → incident prolongé.",
+            "Branches longues → conflits de fusion."
+          ],
+          "examples": [
+            "GitHub Actions construisant/testant/déployant les conteneurs.",
+            "Terraform approvisionnant l’infrastructure de base sur plusieurs environnements."
+          ]
+        },
+        "history": {
+          "then": "Équipes isolées, livraisons trimestrielles.",
+          "now": "Livraison continue avec ingénierie de plateforme et pipelines standardisés.",
+          "dateThen": "Années 2000",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "# CI/CD minimal (GitHub Actions)\\n- uses: actions/checkout@v4\\n- run: npm ci\\n- run: npm test -- --ci\\n- run: docker build -t web:latest .",
+        "references": [
+          "https://learn.microsoft.com/devops/what-is-devops",
+          "https://12factor.net/"
+        ]
+      },
+      {
+        "id": "testing-tdd-bdd-ddd",
+        "title": "TDD, BDD et DDD : construire ce qui est nécessaire, rien de plus",
+        "summary": "TDD définit la logique, BDD le comportement, DDD la structure ; ensemble, ils évitent le gaspillage.",
+        "skills": [
+          "Testing",
+          "Architecture",
+          "C#",
+          "Devops"
+        ],
+        "pillars": {
+          "definition": "TDD : rouge→vert→refactor ; BDD : Given/When/Then ; DDD : langage ubiquitaire + contextes délimités.",
+          "whenToUse": [
+            "TDD pour les modules logiques complexes et la sécurité de refactorisation.",
+            "BDD pour les critères d’acceptation transverses.",
+            "DDD pour les domaines complexes et systèmes multi-équipes."
+          ],
+          "whenToAvoid": [
+            "Éviter la surabondance de tests triviaux CRUD.",
+            "Éviter la cérémonie DDD pour des applications simples."
+          ],
+          "keyRules": [
+            "Garder les tests atomiques, déterministes et rapides.",
+            "Tester le comportement, pas les détails internes.",
+            "Utiliser des tests de contrat/consommateur entre services.",
+            "Modéliser les agrégats avec invariants ; éviter les modèles anémiques.",
+            "Structurer les tests : acceptation → intégration → unité.",
+            "Refactoriser sans crainte avec les tests verts.",
+            "Maintenir le langage ubiquitaire dans le code et la documentation."
+          ],
+          "pitfalls": [
+            "Abus de mocks → tests couplés à l’implémentation.",
+            "Contextes mal délimités → couplage excessif."
+          ],
+          "examples": [
+            "Scénarios Gherkin pour les flux de commande.",
+            "Agrégat racine Payment avec vérifications d’invariants."
+          ]
+        },
+        "history": {
+          "then": "Tests après coup ; mocks omniprésents.",
+          "now": "Spécifications vivantes et contrats pilotent l’architecture.",
+          "dateThen": "Années 2000",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "[Fact]\\npublic void Deposit_IncreasesBalance(){\\n  var acc = new Account(100);\\n  acc.Deposit(50);\\n  Assert.Equal(150, acc.Balance);\\n}",
+        "references": [
+          "https://martinfowler.com/bliki/TestDrivenDevelopment.html",
+          "https://cucumber.io/docs/bdd/",
+          "https://learn.microsoft.com/dotnet/architecture/modern-web-apps/domain-driven-design"
+        ]
+      },
+      {
+        "id": "testing-unit-vs-integration",
+        "title": "Tests unitaires vs intégration : portée, vitesse et confiance",
+        "summary": "Les tests unitaires isolent un composant ; les tests d’intégration vérifient la collaboration. Leur équilibre assure retour rapide et couverture réaliste.",
+        "skills": [
+          "Testing",
+          "Architecture",
+          "C#",
+          "Devops"
+        ],
+        "pillars": {
+          "definition": "Les tests unitaires ciblent une classe ou fonction sans dépendances externes. Les tests d’intégration valident les interactions entre modules, bases et APIs.",
+          "whenToUse": [
+            "Unitaires : logique pure, algorithmes, règles métier.",
+            "Intégration : franchissements de frontières ou effets de bord.",
+            "Les deux : assurance multicouche dans les pipelines CI."
+          ],
+          "whenToAvoid": [
+            "Éviter les mocks excessifs dans les tests d’intégration ; tester le comportement réel.",
+            "Éviter les tests UI lents et fragiles pour la logique isolable."
+          ],
+          "keyRules": [
+            "Tests unitaires rapides exécutés à chaque commit (<100 ms chacun).",
+            "Tests d’intégration sur PR ou builds nocturnes.",
+            "Jeux de données réalistes et bases éphémères.",
+            "Tests unitaires déterministes : pas de réseau, pas de dépendance temporelle.",
+            "Séparer les catégories de tests par nom ou balises.",
+            "Ne mocker que les frontières, jamais l’interne."
+          ],
+          "pitfalls": [
+            "Mocks trop profonds masquant les bugs d’intégration.",
+            "Tests d’intégration dépendant d’état partagé → instabilité."
+          ],
+          "examples": [
+            "Unitaire : vérifier que TaxCalculator renvoie le bon taux.",
+            "Intégration : vérifier qu’un flux de commande complet persiste et facture correctement."
+          ]
+        },
+        "history": {
+          "then": "Frontières floues ; tout s’appelait « test unitaire ».",
+          "now": "Les pipelines CI séparent les tests logiques rapides des vérifications bout-en-bout.",
+          "dateThen": "Années 2010",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "[Fact]\\npublic void Sum_ReturnsExpected(){\\n  var s = new MathService();\\n  Assert.Equal(7, s.Sum(3,4));\\n}\\n\\n[Fact]\\npublic async Task Order_Flow_Works(){\\n  var client = _factory.CreateClient();\\n  var res = await client.PostAsJsonAsync(\"/orders\", new{ ItemId=1 });\\n  res.EnsureSuccessStatusCode();\\n}",
+        "references": [
+          "https://martinfowler.com/articles/practical-test-pyramid.html",
+          "https://learn.microsoft.com/dotnet/core/testing/unit-testing-best-practices"
+        ]
+      },
+      {
+        "id": "testing-automation-reliability",
+        "title": "Fiabilité de l’automatisation : du test instable au déterminisme",
+        "summary": "Les tests instables sapent la confiance et ralentissent la livraison ; le déterminisme garantit des pipelines fiables et crédibles.",
+        "skills": [
+          "Testing",
+          "Architecture",
+          "C#",
+          "Devops"
+        ],
+        "pillars": {
+          "definition": "La fiabilité des tests signifie qu’ils produisent le même résultat à chaque exécution avec le même code, indépendamment du moment ou de l’environnement.",
+          "whenToUse": [
+            "Appliquer ces pratiques aux exécutions CI/CD et nocturnes.",
+            "Utiliser des environnements hermétiques et des données semées pour la cohérence."
+          ],
+          "whenToAvoid": [
+            "Éviter les attentes non déterministes ou les données aléatoires sans seed.",
+            "Éviter l’état mutable partagé entre les tests."
+          ],
+          "keyRules": [
+            "Mocker le temps, l’aléatoire et les services externes de manière déterministe.",
+            "Utiliser des seeds fixes pour les générateurs pseudo-aléatoires.",
+            "Réinitialiser l’état entre tests (troncature BD ou transactions).",
+            "Utiliser le retry uniquement pour les défaillances d’infra transitoires.",
+            "Mesurer les tests instables et isoler leurs échecs.",
+            "Paralléliser en toute sécurité via des ressources temporaires isolées."
+          ],
+          "pitfalls": [
+            "Les tests instables cachent les régressions par réussite intermittente.",
+            "Les délais codés en dur rendent les exécutions lentes et instables."
+          ],
+          "examples": [
+            "Initialisation de RNG avec seed pour tests reproductibles.",
+            "Réinitialisation transactionnelle de BD après chaque run."
+          ]
+        },
+        "history": {
+          "then": "Les tests instables étaient considérés comme « normaux ».",
+          "now": "Déterminisme, isolation et observabilité CI rendent la fiabilité mesurable.",
+          "dateThen": "Années 2010",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "[Fact]\\npublic void RandomTest_UsesSeed(){\\n  var rng = new Random(42);\\n  var values = Enumerable.Range(0,3).Select(_=>rng.Next(0,10)).ToArray();\\n  Assert.Equal(new[]{7,1,0}, values);\\n}",
+        "references": [
+          "https://testing.googleblog.com/2020/07/measuring-and-improving-flaky-tests.html",
+          "https://martinfowler.com/articles/nonDeterminism.html"
+        ]
+      },
+      {
+        "id": "api-versioning",
+        "title": "Versionnage d’API : évoluer sans casser les clients",
+        "summary": "Taguer les contrats par version, déprécier avec grâce et supporter des formes parallèles.",
+        "skills": [
+          "API",
+          "Architecture",
+          "C#",
+          "Devops"
+        ],
+        "pillars": {
+          "definition": "Exposer les versions via URL, en-tête ou type MIME afin que les clients choisissent explicitement la nouvelle forme.",
+          "whenToUse": [
+            "APIs publiques ou partenaires avec multiples clients.",
+            "Modifications cassantes de champs ou sémantique."
+          ],
+          "whenToAvoid": [
+            "Éviter l’incrément de version pour des ajouts non cassants."
+          ],
+          "keyRules": [
+            "Documenter les versions supportées et la politique de retrait.",
+            "Avertir via en-têtes de dépréciation avant suppression.",
+            "Tolérer les champs inconnus côté serveur.",
+            "Versionner explicitement les profils de sérialisation.",
+            "Défaut sur la version stable la plus récente quand sûr.",
+            "Générer un OpenAPI par version."
+          ],
+          "pitfalls": [
+            "Sélection de version par défaut ambiguë.",
+            "Conflits de routes entre attributs et conventions."
+          ],
+          "examples": [
+            "GET /api/v2/users",
+            "Header : api-version: 2.0"
+          ]
+        },
+        "history": {
+          "then": "Points de terminaison écrasés sur place.",
+          "now": "Versions coexistantes avec outils et génération de spécifications.",
+          "dateThen": "Années 2010",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "[ApiVersion(\"2.0\")]\\n[Route(\"api/v{version:apiVersion}/[controller]\")]",
+        "references": [
+          "https://learn.microsoft.com/aspnet/core/web-api/advanced/versioning"
+        ]
+      },
+      {
+        "id": "database-concurrency",
+        "title": "Concurrence en base de données : éviter les mises à jour perdues",
+        "summary": "Utiliser des jetons optimistes ou des verrous pessimistes pour éviter les écrasements et la corruption.",
+        "skills": [
+          "SQL",
+          "Architecture",
+          ".NET"
+        ],
+        "pillars": {
+          "definition": "La concurrence optimiste utilise des jetons de version ; la pessimiste, des verrous pour sérier l’accès.",
+          "whenToUse": [
+            "Optimiste pour charges à faible conflit.",
+            "Pessimiste pour conflits fréquents ou modifications destructrices."
+          ],
+          "whenToAvoid": [
+            "Éviter les verrous globaux de table.",
+            "Éviter le last-write-wins sans validation utilisateur."
+          ],
+          "keyRules": [
+            "Utiliser RowVersion/timestamp avec EF Core.",
+            "Intercepter DbUpdateConcurrencyException et fusionner.",
+            "Choisir le bon niveau d’isolation transactionnelle.",
+            "Garder les transactions courtes et ciblées.",
+            "Détecter et retenter les deadlocks avec gigue."
+          ],
+          "pitfalls": [
+            "Lectures fantômes à faible isolation.",
+            "Verrous longs causant la contention."
+          ],
+          "examples": [
+            "En-têtes ETag/If-Match pour mises à jour REST.",
+            "SELECT … FOR UPDATE pour transferts critiques."
+          ]
+        },
+        "exampleCode": "public byte[] RowVersion { get; set; }",
+        "references": [
+          "https://learn.microsoft.com/ef/core/saving/concurrency"
+        ]
+      },
+      {
+        "id": "caching-strategy",
+        "title": "Mise en cache : lectures rapides sans données obsolètes",
+        "summary": "Mettre en cache pour la vitesse, invalider pour la vérité, surveiller pour la cohérence.",
+        "skills": [
+          "Architecture",
+          ".NET",
+          "Devops",
+          "API"
+        ],
+        "pillars": {
+          "definition": "Les caches stockent les données fréquemment lues en mémoire ou en magasin distribué pour réduire la latence.",
+          "whenToUse": [
+            "In-memory pour petites données critiques.",
+            "Redis distribué pour services multi-instances.",
+            "Output caching pour requêtes coûteuses."
+          ],
+          "whenToAvoid": [
+            "Éviter la mise en cache de données très dynamiques sans clés adaptées.",
+            "Éviter les entrées non bornées qui saturent le GC."
+          ],
+          "keyRules": [
+            "Définir les TTL selon les besoins de fraîcheur.",
+            "Invalider lors des écritures ; utiliser pub/sub si partagé.",
+            "Protection contre les stampedes (single flight/verrou).",
+            "Surveiller taux hit/miss, taille, évictions.",
+            "Séparer caches chauds et froids.",
+            "Utiliser ETag/Cache-Control pour HTTP."
+          ],
+          "pitfalls": [
+            "Re-construction simultanée du même clé (stampede).",
+            "Données obsolètes après écriture.",
+            "Collisions de clés multi-tenant."
+          ],
+          "examples": [
+            "MemoryCache pour configurations/feature flags.",
+            "Redis IDistributedCache pour sessions.",
+            "Response caching pour endpoints publics."
+          ]
+        },
+        "exampleCode": "services.AddStackExchangeRedisCache(o => o.Configuration = \"localhost:6379\");",
+        "references": [
+          "https://learn.microsoft.com/aspnet/core/performance/caching/"
+        ]
+      },
+      {
+        "id": "idempotency-retries",
+        "title": "Idempotence et retries : recommencer sans double facturation",
+        "summary": "Concevoir des opérations tolérantes aux rejouements ; retenter les fautes transitoires avec repli exponentiel.",
+        "skills": [
+          "API",
+          "Architecture",
+          "Devops"
+        ],
+        "pillars": {
+          "definition": "Une opération idempotente produit le même résultat quand répétée ; les retries gèrent les erreurs transitoires en sécurité.",
+          "whenToUse": [
+            "Paiements, créations de commande, récepteurs webhook.",
+            "Tout appel réseau sujet aux pannes transitoires."
+          ],
+          "whenToAvoid": [
+            "Éviter les retries aveugles sur erreurs métier.",
+            "Éviter les retries sans bornage ni backoff."
+          ],
+          "keyRules": [
+            "Utiliser des idempotency keys (requestId) et stockage dé-dupliqué.",
+            "Rendre les handlers conscients des effets de bord.",
+            "Appliquer backoff exponentiel + jitter.",
+            "Classifier erreurs : réessayables vs fatales.",
+            "Tracer les tentatives pour audit."
+          ],
+          "pitfalls": [
+            "Double-facturation par absence de clé idempotente.",
+            "Tempêtes de retries aggravant les pannes."
+          ],
+          "examples": [
+            "En-tête Stripe Idempotency-Key.",
+            "Politiques Polly retry + circuit-breaker."
+          ]
+        },
+        "history": {
+          "then": "Sécurité manuelle best-effort.",
+          "now": "Patrons et bibliothèques standardisent la sécurité.",
+          "dateThen": "Années 2010",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "services.AddHttpClient(\"pay\").AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(5, i => TimeSpan.FromMilliseconds(200 * Math.Pow(2, i))));",
+        "references": [
+          "https://github.com/App-vNext/Polly"
+        ]
+      },
+      {
+        "id": "rate-limiting-backpressure",
+        "title": "Limitation de débit et contre-pression : se protéger avant tout",
+        "summary": "Limiter les entrées et ralentir les producteurs pour maintenir la stabilité du système sous charge.",
+        "skills": [
+          "API",
+          "Architecture",
+          "Devops",
+          "Performance"
+        ],
+        "pillars": {
+          "definition": "La limitation de débit borne les requêtes par identité ; la contre-pression ralentit les producteurs pour s’adapter à la capacité des consommateurs.",
+          "whenToUse": [
+            "APIs publiques exposées à Internet.",
+            "Services ayant des dépendances coûteuses en aval."
+          ],
+          "whenToAvoid": [
+            "Éviter les limites globales sur trafic interne critique.",
+            "Éviter les rafales non bornées vers composants à état."
+          ],
+          "keyRules": [
+            "Segmenter par locataire/utilisateur/IP/clé API.",
+            "Publier les limites via en-têtes X-RateLimit-*.",
+            "Utiliser files bornées ; rejeter proprement au-delà.",
+            "Employer seaux de jetons ou fuites pour lisser.",
+            "Autoscaler avec limites, non à la place des limites.",
+            "Protéger les dépendances en aval avec budgets."
+          ],
+          "pitfalls": [
+            "Verrou global provoquant blocage en tête de file.",
+            "Locataires silencieux affamés par voisins bruyants."
+          ],
+          "examples": [
+            "Middleware RateLimiter ASP.NET Core (fenêtres fixes/glissantes).",
+            "Files basées sur Channel avec capacité bornée."
+          ]
+        },
+        "exampleCode": "builder.Services.AddRateLimiter(o => o.AddFixedWindowLimiter(\"api\", l => { l.Window = TimeSpan.FromSeconds(1); l.PermitLimit = 50; }));",
+        "references": [
+          "https://learn.microsoft.com/aspnet/core/performance/rate-limit"
+        ]
+      },
+      {
+        "id": "rest-design",
+        "title": "Conception REST : stable, prévisible, évolutive",
+        "summary": "Utiliser des noms de ressources cohérents, les verbes HTTP et des réponses prévisibles.",
+        "skills": [
+          "API",
+          "Architecture"
+        ],
+        "pillars": {
+          "definition": "Représenter les entités par des ressources (noms) ; employer méthodes et codes HTTP pour actions et résultats.",
+          "whenToUse": [
+            "APIs publiques, partenaires ou plateformes internes."
+          ],
+          "whenToAvoid": [
+            "Éviter RPC centré actions pour CRUD de ressources.",
+            "Éviter POST pour tout type d’opération."
+          ],
+          "keyRules": [
+            "Noms pluriels ; hiérarchie imbriquée pour l’appartenance.",
+            "Retourner ProblemDetails pour les erreurs.",
+            "Pagination par curseur/clés pour collections.",
+            "HATEOAS optionnel ; liens explicites préférés.",
+            "Idempotence sur PUT/DELETE.",
+            "PATCH partiel avec validation stricte."
+          ],
+          "pitfalls": [
+            "Abstractions internes fuyantes.",
+            "Codes d’état incohérents déstabilisant les clients."
+          ],
+          "examples": [
+            "GET /v1/orders?cursor=…&limit=50",
+            "PATCH /v1/users/{id} avec JSON Patch"
+          ]
+        },
+        "history": {
+          "then": "Endpoints JSON ad-hoc.",
+          "now": "Design OpenAPI-first avec tests de contrat.",
+          "dateThen": "Années 2010",
+          "dateNow": "Années 2020"
+        },
+        "exampleCode": "app.MapGet(\"/v1/users\", (int limit, string? cursor) => Results.Ok());",
+        "references": [
+          "https://opensource.zalando.com/restful-api-guidelines/",
+          "https://learn.microsoft.com/aspnet/core/web-api/"
+        ]
+      },
+      {
+        "id": "openapi-first",
+        "title": "OpenAPI First : concevoir le contrat avant le code",
+        "summary": "Générer clients et serveurs depuis la spécification pour éliminer les divergences et suppositions.",
+        "skills": [
+          "API",
+          "Architecture",
+          "Devops"
+        ],
+        "pillars": {
+          "definition": "OpenAPI décrit endpoints, schémas et authentification ; le code est généré et validé selon ce contrat.",
+          "whenToUse": [
+            "Développement multi-équipes ou consommateurs externes.",
+            "Génération de SDK et tests de contrat."
+          ],
+          "whenToAvoid": [
+            "Éviter code-first pour prototypes à évolution rapide (temporaire)."
+          ],
+          "keyRules": [
+            "Linter les spécifications ; revue obligatoire en PR.",
+            "Source unique de vérité pour les schémas.",
+            "Taguer les opérations par contexte borné.",
+            "Fournir exemples et enums explicites.",
+            "Valider requêtes/réponses en CI."
+          ],
+          "pitfalls": [
+            "Dérive spec/code par double édition.",
+            "Champs nullable/required ambigus."
+          ],
+          "examples": [
+            "Collaboration Stoplight/SwaggerHub.",
+            "openapi-generator produisant SDK C#/TS."
+          ]
+        },
+        "exampleCode": "// Swashbuckle\\nbuilder.Services.AddEndpointsApiExplorer();\\nbuilder.Services.AddSwaggerGen();",
+        "references": [
+          "https://swagger.io/specification/",
+          "https://github.com/OpenAPITools/openapi-generator"
+        ]
+      },
+      {
+        "id": "input-validation",
+        "title": "Validation : ne jamais faire confiance aux données d’entrée",
+        "summary": "Valider les entrées aux frontières ; centraliser les règles ; retourner des erreurs exploitables.",
+        "skills": [
+          "API",
+          "Architecture",
+          "Security"
+        ],
+        "pillars": {
+          "definition": "La validation impose forme, plages et invariants avant tout traitement.",
+          "whenToUse": [
+            "Toutes les frontières d’API publiques et internes.",
+            "Avant toute mutation BD pour réduire les retries."
+          ],
+          "whenToAvoid": [
+            "Éviter la duplication des règles à travers les couches ; partager la logique."
+          ],
+          "keyRules": [
+            "Utiliser des DTOs distincts des entités.",
+            "Retourner ProblemDetails avec erreurs par champ.",
+            "Nettoyer/normaliser les entrées (trim, casse).",
+            "Valider ID et propriété pour éviter les IDOR.",
+            "Limiter taille et profondeur des payloads.",
+            "Limiter les tentatives échouées par rate limit."
+          ],
+          "pitfalls": [
+            "Confiance aveugle envers les IDs clients.",
+            "Vérifications dispersées créant des failles."
+          ],
+          "examples": [
+            "FluentValidation branché sur minimal APIs.",
+            "Filtre centralisé de validation avec erreurs cohérentes."
+          ]
+        },
+        "references": [
+          "https://learn.microsoft.com/aspnet/core/web-api/?view=aspnetcore-8.0#automatic-http-400-responses",
+          "https://github.com/FluentValidation/FluentValidation"
+        ]
+      },
+      {
+        "id": "docker-images",
+        "title": "Images Docker : petites, sûres, rapides à livrer",
+        "summary": "Utiliser des bases minimales, builds multi-étapes et utilisateurs non-root pour livrer vite et en sécurité.",
+        "skills": [
+          "DOCKER",
+          "CI/CD",
+          "Devops",
+          "Security"
+        ],
+        "pillars": {
+          "definition": "Les conteneurs embarquent applis et dépendances ; les images doivent rester petites, cacheables et non-root.",
+          "whenToUse": [
+            "Tous les services déployables et jobs.",
+            "Parité locale avec stacks de production."
+          ],
+          "whenToAvoid": [
+            "Éviter images gonflées avec outils de build au runtime.",
+            "Éviter exécution root en production."
+          ],
+          "keyRules": [
+            "Multi-stage builds ; copier seulement les artefacts publiés.",
+            "Utiliser distroless/alpine si possible.",
+            "Pinner les digests et scanner les CVEs.",
+            "Exposer endpoints de santé ; FS en lecture seule.",
+            "USER non-root et suppression des capacités inutiles.",
+            "Couches déterministes pour cache efficace.",
+            "BuildKit/--mount=type=cache pour npm/nuget."
+          ],
+          "pitfalls": [
+            "Images énormes ralentissant CI/CD et cold starts.",
+            "Secrets divulgués via args/layers."
+          ],
+          "examples": [
+            "dotnet publish → runtime distroless.",
+            "Build Node + nginx/distroless pour statiques."
+          ]
+        },
+        "exampleCode": "# Build multi-étapes .NET\\nFROM mcr.microsoft.com/dotnet/sdk:8.0 AS build\\nWORKDIR /src\\nCOPY . .\\nRUN dotnet publish -c Release -o /out\\n\\nFROM gcr.io/distroless/dotnet/aspnet:8.0\\nWORKDIR /app\\nCOPY --from=build /out .\\nUSER 10001\\nENTRYPOINT [\"dotnet\",\"App.dll\"]",
+        "references": [
+          "https://docs.docker.com/develop/develop-images/multistage-build/",
+          "https://github.com/GoogleContainerTools/distroless"
+        ]
+      },
+      {
+        "id": "bluegreen-canary",
+        "title": "Blue-Green & Canary : des déploiements sûrs par conception",
+        "summary": "Faire migrer le trafic progressivement, observer les signaux et annuler rapidement en cas de régression.",
+        "skills": [
+          "CI/CD",
+          "Devops",
+          "Architecture"
+        ],
+        "pillars": {
+          "definition": "Blue-green garde deux environnements prod ; canary transfère le trafic par lots vers la nouvelle version.",
+          "whenToUse": [
+            "Changements risqués, migrations ou upgrades d’infra.",
+            "Services à fort trafic nécessitant zéro downtime."
+          ],
+          "whenToAvoid": [
+            "Éviter les bascules massives sans métriques.",
+            "Éviter les coupures manuelles hors horaires."
+          ],
+          "keyRules": [
+            "Automatiser roll-forward/rollback.",
+            "Conditionner sur SLOs et budgets d’erreur.",
+            "Cibler canaries par locataire ou région.",
+            "Synchroniser config/secrets sur les deux couleurs.",
+            "Vider les connexions proprement.",
+            "Tracer l’exposition via feature flags."
+          ],
+          "pitfalls": [
+            "Dérive de configuration entre blue/green.",
+            "Schéma BD incompatible lors de rollout partiel."
+          ],
+          "examples": [
+            "Déploiement Kubernetes progressif.",
+            "Routage pondéré API Gateway pour canary."
+          ]
+        },
+        "references": [
+          "https://martinfowler.com/bliki/BlueGreenDeployment.html",
+          "https://learn.microsoft.com/azure/architecture/example-scenario/cdn/cdn-blue-green-deployment"
+        ]
+      },
+      {
+        "id": "vue-composition-api",
+        "title": "API de composition Vue : réutilisable, typée, testable",
+        "summary": "Extraire la logique dans des composables ; garder les composants fins ; tout typer.",
+        "skills": [
+          "Vue",
+          "Architecture",
+          "Performance"
+        ],
+        "pillars": {
+          "definition": "La Composition API regroupe la logique par fonction (useX) au lieu d’option ; plus facile à réutiliser et à tester.",
+          "whenToUse": [
+            "Comportement partagé entre plusieurs composants.",
+            "Composants complexes à multiples responsabilités."
+          ],
+          "whenToAvoid": [
+            "Éviter les composables géants ; diviser par préoccupation."
+          ],
+          "keyRules": [
+            "Retourner surface minimale depuis composables.",
+            "Préférer refs/computed aux objets réactifs profonds.",
+            "Utiliser defineProps/defineEmits typés TS.",
+            "Limiter WatchEffect ; préférer watchers explicites.",
+            "Charger paresseusement via import() dynamique.",
+            "Suspense pour setup async.",
+            "Provide/inject pour dépendances globales testables."
+          ],
+          "pitfalls": [
+            "Mutations non suivies hors contexte réactif.",
+            "Fuites mémoire si watchers non stoppés."
+          ],
+          "examples": [
+            "usePagination, useFetch avec cache.",
+            "useI18n-locale synchronisé route."
+          ]
+        },
+        "exampleCode": "export function useCounter(){\\n  const n = ref(0);\\n  const inc = () => n.value++;\\n  return { n, inc };\\n}",
+        "references": [
+          "https://vuejs.org/guide/introduction.html#composition-api"
+        ]
+      },
+      {
+        "id": "vue-performance",
+        "title": "Performance Vue : rendre moins, travailler mieux",
+        "summary": "Réduire la réactivité inutile ; virtualiser les grandes listes ; découper le code lourd.",
+        "skills": [
+          "Vue",
+          "Performance"
+        ],
+        "pillars": {
+          "definition": "Le rendu est limité par le CPU, la réactivité par la mémoire ; optimiser en réduisant le travail et les dépendances.",
+          "whenToUse": [
+            "Longues listes, MAJ fréquentes ou vues animées."
+          ],
+          "whenToAvoid": [
+            "Éviter gros objets réactifs ; préférer refs granulaire.",
+            "Éviter watchers profonds non nécessaires."
+          ],
+          "keyRules": [
+            "v-memo/v-once pour sous-arbres stables.",
+            "Virtual scroll pour grandes collections.",
+            "Utiliser key pour contrôler la réutilisation.",
+            "Débouncer/throttler entrées et scrolls.",
+            "Pré-calculer l’état dérivé via computed.",
+            "Découper en chunks et précharger routes critiques.",
+            "Mesurer avec Vue Devtools (onglet performance)."
+          ],
+          "pitfalls": [
+            "Déclencheurs réactifs accidentels (spread reactive).",
+            "v-for sans key causant thrash DOM."
+          ],
+          "examples": [
+            "Table 100k lignes avec virtual list.",
+            "Lazy loading des routes via imports dynamiques."
+          ]
+        },
+        "references": [
+          "https://vuejs.org/guide/best-practices/performance.html"
+        ]
+      },
+      {
+        "id": "sql-indexing",
+        "title": "Indexation SQL : lecture rapide, écriture réfléchie",
+        "summary": "Les index accélèrent les lectures mais ralentissent les écritures ; concevoir selon les requêtes.",
+        "skills": [
+          "SQL",
+          "Performance",
+          "Architecture"
+        ],
+        "pillars": {
+          "definition": "Les index offrent un ordre alternatif pour les recherches rapides ; les clés composites couvrent les prédicats communs.",
+          "whenToUse": [
+            "Filtres/joins fréquents sur mêmes colonnes.",
+            "Ordre + plages avec index couvrants."
+          ],
+          "whenToAvoid": [
+            "Éviter index sur colonnes à taux d’écriture extrême sans besoin.",
+            "Éviter index redondants similaires."
+          ],
+          "keyRules": [
+            "Colonnes sélectives d’abord.",
+            "Couvrir les requêtes (INCLUDE) pour éviter lookups.",
+            "Pas de fonctions dans les prédicats indexés.",
+            "Revue périodique des index inutilisés.",
+            "Index partiels pour données clairsemées.",
+            "Surveiller fragmentation et reconstruire si besoin."
+          ],
+          "pitfalls": [
+            "Amplification d’écriture par excès d’index.",
+            "Sniffing de paramètres générant mauvais plans."
+          ],
+          "examples": [
+            "IX_Orders_UserId_CreatedAt (INCLUDE Total).",
+            "Index filtré sur IsActive=1."
+          ]
+        },
+        "references": [
+          "https://use-the-index-luke.com/"
+        ]
+      },
+      {
+        "id": "sql-transactions-isolation",
+        "title": "Niveaux d’isolation : cohérence vs débit",
+        "summary": "Choisir le plus bas niveau d’isolation assurant la cohérence ; connaître ses anomalies.",
+        "skills": [
+          "SQL",
+          "Architecture"
+        ],
+        "pillars": {
+          "definition": "L’isolation contrôle la visibilité entre transactions concurrentes (read committed, repeatable read, serializable, snapshot).",
+          "whenToUse": [
+            "Snapshot pour éviter verrous de lecture via versions ligne.",
+            "Serializable pour invariants intolérants aux fantômes."
+          ],
+          "whenToAvoid": [
+            "Éviter serializable globalement (bloque la concurrence).",
+            "Éviter read uncommitted pour données financières."
+          ],
+          "keyRules": [
+            "Documenter invariants et associer iso adéquat.",
+            "Transactions courtes.",
+            "Contraintes uniques pour clés métier.",
+            "Retenter les deadlocks avec gigue.",
+            "Tracer transactions longues."
+          ],
+          "pitfalls": [
+            "Fantômes cassant décomptes/limites.",
+            "Deadlocks dus à ordre de verrous incohérent."
+          ],
+          "examples": [
+            "Index unique garantissant un panier actif par user.",
+            "Snapshot isolation pour gros rapports."
+          ]
+        },
+        "references": [
+          "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "https://learn.microsoft.com/sql/connect/jdbc/understanding-isolation-levels"
+        ]
+      }
+    ]
   }
 }

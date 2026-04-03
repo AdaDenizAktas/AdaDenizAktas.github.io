@@ -17,48 +17,76 @@
     </transition>
 
     <!-- Timeline -->
-    <!-- Timeline -->
     <transition name="lang-phase" mode="out-in">
+
+
       <div :key="locale" class="relative max-w-6xl mx-auto flex flex-col gap-16 px-4">
-        <div v-for="(job, index) in experiences" :key="index" :class="[
-          'relative flex flex-col md:flex-row items-center justify-between',
-          index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse',
-          index === 0 ? 'latest-active' : ''
-        ]">
-          <!-- Connector Line -->
-          <div
-            class="absolute left-1/2 -translate-x-1/2 w-[2px] h-full bg-gradient-to-b from-transparent via-blue-900/30 to-transparent pointer-events-none hidden md:block">
-          </div>
-
-          <!-- Year Marker -->
-          <div
-            class="absolute md:static text-blue-400/70 font-semibold text-xs -top-5 md:top-0 md:mx-6 tracking-widest uppercase">
-            {{ t(`experience.items.${index}.period`) }}
-          </div>
-
-          <!-- Experience Card -->
+        <!-- Replace ONLY the v-for block with this final refined version -->
+        <div v-for="(job, index) in experiences" :key="index"
+          class="relative flex flex-col md:flex-row items-center justify-between w-full">
           <div :class="[
-            'relative bg-black/40 border border-slate-700/40 backdrop-blur-md shadow-inner shadow-slate-800/40 p-6 flex-1 md:max-w-[60%] z-10 transition-all duration-700 hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(60,100,255,0.25)] hover:-translate-y-1',
-            index === 0 ? 'rounded-none' : 'rounded-xl'
+            'flex items-center w-full gap-6',
+            index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse',
+            index === 0 ? 'latest-active' : ''
           ]">
-            <div class="flex items-center gap-3 mb-3">
-              <component :is="job.icon"
-                class="h-7 w-7 text-blue-400/80 group-hover:text-blue-300 transition-colors duration-300" />
-              <h3 class="text-xl font-semibold tracking-wide">
-                {{ t(`experience.items.${index}.role`) }}
-              </h3>
+            <!-- Date (desktop) -->
+            <div :class="[
+              'text-blue-400/70 font-semibold text-xs tracking-widest uppercase hidden md:block w-[160px] shrink-0 whitespace-nowrap',
+              index % 2 === 0
+                ? 'text-left self-center pl-4'
+                : 'text-right self-center pr-4'
+            ]">
+              {{ t(`experience.items.${index}.period`) }}
             </div>
 
-            <p class="text-slate-400 text-sm mb-1">
-              {{ t(`experience.items.${index}.company`) }}
-            </p>
-            <p class="text-slate-400 text-sm leading-relaxed">
-              {{ t(`experience.items.${index}.description`) }}
-            </p>
+            <!-- Card -->
+            <div :class="[
+              'relative bg-black/40 border border-slate-700/40 backdrop-blur-md shadow-inner shadow-slate-800/40 p-6 flex-1 z-10 transition-all duration-700 hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(60,100,255,0.25)] hover:-translate-y-1',
+              index === 0 ? 'rounded-none' : 'rounded-xl'
+            ]">
+              <div class="flex items-center gap-3 mb-3">
+                <component :is="job.icon"
+                  class="h-7 w-7 text-blue-400/80 group-hover:text-blue-300 transition-colors duration-300" />
+                <h3 class="text-xl font-semibold tracking-wide">
+                  {{ t(`experience.items.${index}.role`) }}
+                </h3>
+              </div>
+
+              <p class="text-slate-400 text-sm mb-1">
+                {{ t(`experience.items.${index}.company`) }}
+              </p>
+              <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                {{ t(`experience.items.${index}.description`) }}
+              </p>
+
+              <!-- Only show for the LAST element -->
+              <div v-if="job.featured" class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-3">
+                <img
+                  src="https://i.kickstarter.com/assets/051/483/048/dea293b49c0b926583e74e3b5b9fb92c_original.jpeg?anim=false&fit=cover&height=220&origin=ugc&q=92&v=1761910699&width=220&sig=7u0LTHG%2BRK2gmlO%2FyqF8iV%2BxCikmTdQVx7%2BwVWhnu7I%3D"
+                  alt="Breakdown ’25 Preview" class="rounded-md shadow-md w-full sm:w-[200px] object-cover" />
+                <a style="display:none" href="https://www.kickstarter.com/projects/ryanb1999/breakdown-25-build-hustle-and-survive-in-a-living-world"
+                  target="_blank" rel="noopener noreferrer"
+                  class="text-blue-400 hover:text-blue-300 text-sm font-medium uppercase tracking-widest transition-all underline underline-offset-4 decoration-blue-500">
+                  {{ t(`experience.supportProject`) }}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Date (mobile) -->
+          <div class="block md:hidden flex justify-center mt-3">
+            <span
+              class="text-blue-400/70 font-semibold text-xs tracking-widest uppercase whitespace-nowrap inline-block px-2">
+              {{ t(`experience.items.${index}.period`) }}
+            </span>
           </div>
         </div>
+
+
+
       </div>
     </transition>
+
 
   </section>
 </template>
@@ -69,14 +97,15 @@ import { useI18n } from 'vue-i18n'
 const { t, locale } = useI18n()
 
 const experiences = [
-  { icon: CodeBracketIcon, start: 'Jul 2025', end: 'Present' },
-  { icon: BriefcaseIcon, start: 'Nov 2024', end: 'Jul 2025' },
-  { icon: CodeBracketIcon, start: 'Nov 2021', end: 'Nov 2024' },
-  { icon: ServerIcon, start: 'Feb 2022', end: 'Mar 2022' },
-  { icon: BriefcaseIcon, start: 'Feb 2021', end: 'Oct 2021' },
-  { icon: CodeBracketIcon, start: 'Dec 2019', end: 'Feb 2021' },
-  { icon: Cog6ToothIcon, start: 'Jan 2019', end: 'Sep 2019' },
-  { icon: CodeBracketIcon, start: 'Aug 2017', end: 'Dec 2018' }
+  { icon: CodeBracketIcon, featured: false }, // latest job (365AMS)
+  { icon: CodeBracketIcon, featured: true },  // Breakdown 25 (Voidlight)
+  { icon: BriefcaseIcon, featured: false },
+  { icon: CodeBracketIcon, featured: false },
+  { icon: ServerIcon, featured: false },
+  { icon: BriefcaseIcon, featured: false },
+  { icon: CodeBracketIcon, featured: false },
+  { icon: Cog6ToothIcon, featured: false },
+  { icon: CodeBracketIcon, featured: false }
 ]
 </script>
 

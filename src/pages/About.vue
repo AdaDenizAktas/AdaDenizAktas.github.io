@@ -4,7 +4,7 @@
     <!-- Title -->
     <transition name="lang-phase" mode="out-in">
       <h2 :key="locale"
-        class="text-4xl sm:text-5xl font-bold uppercase text-white tracking-[0.3em] mb-10 relative after:absolute after:bottom-[-8px] after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-[2px] after:bg-slate-600/50">
+        class="text-4xl sm:text-5xl font-bold uppercase text-white tracking-[0.3em] mb-10 relative after:absolute after:bottom-[-8px] after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-slate-600/50">
         {{ t('about.title') }}
       </h2>
     </transition>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lost in Continuum</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #020312 0%, #000 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bcd3ff;
+            font-family: Segoe UI, monospace;
+            letter-spacing: .1em
+        }
+
+        .container {
+            text-align: center;
+            animation: fadeIn 2s ease-in-out
+        }
+
+        .glow {
+            font-size: 4em;
+            font-weight: 700;
+            text-shadow: 0 0 6px #7aa2ff, 0 0 12px #7aa2ff
+        }
+
+        .hint {
+            margin-top: 1em;
+            opacity: .85;
+            animation: pulse 2s infinite ease-in-out
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: .6
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="msg" style="display:none;">
+        <div class="glow">404</div>
+        <div class="glow">LOST IN CONTINUUM</div>
+        <div class="hint">Recalibrating navigation systems…</div>
+        <div class="hint" style="font-size:.9em;">Redirecting to home base…</div>
+    </div>
+    <script>
+        const valid = new Set([
+            '/', '/about', '/skills', '/experience', '/projects', '/contact', '/best-practices'
+        ])
+
+        // Normalize path: remove trailing slash, lowercase, and strip ".html" if present
+        let path = location.pathname.toLowerCase()
+        path = path.replace(/\/+$/, '').replace(/\.html$/, '') || '/'
+
+        // Allow both with and without dash variations
+        if (!valid.has(path) && path === '/bestpractices') path = '/best-practices'
+
+        const full = location.pathname + location.search + location.hash
+
+        if (valid.has(path)) {
+            sessionStorage.setItem('vue-spa-redirect', full)
+            location.replace('/')
+        } else {
+            document.getElementById('msg').style.display = 'block'
+            setTimeout(() => location.replace('/'), 5000)
+        }
+    </script>
+
+</body>
+
+</html>
