@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.2.0",
     "firebase": "^12.4.0",
     "html2canvas": "^1.4.1",
     "three": "^0.180.0",
